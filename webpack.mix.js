@@ -13,6 +13,16 @@ const { mix } = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .js('resources/assets/js/app-landing.js', 'public/js/app-landing.js')
+   .scripts([
+      'node_modules/bootstrap-daterangepicker/moment.min.js',
+      'node_modules/bootstrap-daterangepicker/daterangepicker.js',
+      'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
+      //'node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.ru.min.js',
+      'node_modules/datatables/media/js/jquery.dataTables.js',
+      'node_modules/datatables.net-bs/js/dataTables.bootstrap.js',
+      'node_modules/jquery-slimscroll/jquery.slimscroll.js',
+      'node_modules/fastclick/lib/fastclick.js'
+      ], 'public/js/all.js')
    .sass('resources/assets/sass/app.scss', 'public/css')
    .less('node_modules/bootstrap-less/bootstrap/bootstrap.less', 'public/css/bootstrap.css')
    .less('resources/assets/less/adminlte-app.less','public/css/adminlte-app.css')
@@ -22,7 +32,11 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'node_modules/admin-lte/dist/css/skins/_all-skins.css',
        'public/css/adminlte-app.css',
        'node_modules/icheck/skins/square/blue.css',
-       'public/css/toastr.css'
+       'public/css/toastr.css',
+       'node_modules/bootstrap-daterangepicker/daterangepicker.css',
+       'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css',
+       'node_modules/datatables/media/css/jquery.dataTables.css',
+       'node_modules/datatables.net-bs/css/dataTables.bootstrap.css'
    ], 'public/css/all.css')
    .combine([
        'public/css/bootstrap.css',
