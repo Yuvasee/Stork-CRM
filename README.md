@@ -1,5 +1,5 @@
 # Stork CRM
-
+*The project is under development and is not ready for use yet!*
 Simple and old-school fashioned CRM system based on Laravel
 
 ## Packages used
@@ -10,4 +10,6 @@ Simple and old-school fashioned CRM system based on Laravel
 * [barryvdh/laravel-debugbar](https://github.com/barryvdh/laravel-debugbar)
 
 ## To do list
-*The project is under development and is not ready for use yet!*
+* Add admin authorisation
+* Add breadcrumbs
+* Fix sidebar states
