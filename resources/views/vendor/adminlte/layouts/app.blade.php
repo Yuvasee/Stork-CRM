@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<!--
+{{--<!--
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
--->
-<html lang="en">
+-->--}}
+<html lang="{!! config('app.locale') !!}">
 
 @section('htmlheader')
     @include('adminlte::layouts.partials.htmlheader')
 @show
 
-<!--
+{{--<!--
 BODY TAG OPTIONS:
 =================
 Apply one or more of the following classes to get the
@@ -28,9 +28,10 @@ desired effect
 |               | sidebar-collapse                        |
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
--->
-<body class="skin-blue sidebar-mini">
-<div id="app" v-cloak>
+-->--}}
+
+<body class="skin-blue sidebar-mini{{ isset($_COOKIE['sidebarCollapsed']) && $_COOKIE['sidebarCollapsed'] == '1' ? " sidebar-collapse" : "" }}"> 
+<div id="app">
     <div class="wrapper">
 
     @include('adminlte::layouts.partials.mainheader')
@@ -44,12 +45,15 @@ desired effect
 
         <!-- Main content -->
         <section class="content">
+
             <!-- Your Page Content Here -->
             @yield('main-content')
+
         </section><!-- /.content -->
+
     </div><!-- /.content-wrapper -->
 
-    @include('adminlte::layouts.partials.controlsidebar')
+    {{-- @include('adminlte::layouts.partials.controlsidebar') --}}
 
     @include('adminlte::layouts.partials.footer')
 
