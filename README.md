@@ -1,6 +1,7 @@
 # Stork CRM
-*The project is under development and is not ready for use yet!*
 Simple and old-school fashioned CRM system based on Laravel
+
+*The project is under development and is not ready for use yet!*
 
 ## Packages used
 * [laravel/laravel](https://github.com/laravel/laravel) as base framework

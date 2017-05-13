@@ -129,5 +129,7 @@ return [
     'stat_output'             => 'Выработка',
     'stat_clients'            => 'Постоянные клиенты',
     'directories'             => 'Справочники',
+    'whoops'                  => 'Ой',
+    'resetpassword'           => 'Сброс пароля',
 
 ];

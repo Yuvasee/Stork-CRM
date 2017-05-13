@@ -25088,6 +25088,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -44418,7 +44422,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
-    staticClass: "col-xs-7"
+    staticClass: "col-xs-12"
   }, [_c('label', [_c('div', {
     staticClass: "checkbox_register icheck"
   }, [_c('label', {
@@ -44469,8 +44473,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     domProps: {
       "textContent": _vm._s(_vm.trans('adminlte_lang_message.conditions'))
     }
-  })])])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-4 col-xs-push-1"
+  })])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-4"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-8"
   }, [_c('button', {
     staticClass: "btn btn-primary btn-block btn-flat",
     attrs: {

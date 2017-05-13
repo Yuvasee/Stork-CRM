@@ -26,7 +26,7 @@
    <input type="password" class="form-control" :placeholder="trans('adminlte_lang_message.retypepassword')" name="password_confirmation" v-model="form.password_confirmation"/>
   </div>
   <div class="row">
-   <div class="col-xs-7">
+   <div class="col-xs-12">
     <label>
      <div class="checkbox_register icheck">
       <label data-toggle="modal" data-target="#termsModal">
@@ -36,7 +36,11 @@
      </div>
     </label>
    </div>
-   <div class="col-xs-4 col-xs-push-1">
+  </div>
+  <div class="row">
+   <div class="col-xs-4">
+   </div>
+   <div class="col-xs-8">
     <button type="submit" class="btn btn-primary btn-block btn-flat" :disabled="form.errors.any()" v-text="trans('adminlte_lang_message.register')"><i v-if="form.submitting" class="fa fa-refresh fa-spin"></i> </button>
    </div>
   </div>

@@ -1,7 +1,7 @@
 @extends('adminlte::layouts.auth')
 
 @section('htmlheader_title')
-    Password recovery
+    {{ trans('adminlte_lang::message.resetpassword') }}
 @endsection
 
 @section('content')
@@ -11,7 +11,7 @@
 
         <div class="login-box">
         <div class="login-logo">
-            <a href="{{ url('/home') }}"><b>Admin</b>LTE</a>
+            <a href="{{ url('/home') }}"><b>Stork </b>CRM</a>
         </div><!-- /.login-logo -->
 
         @if (session('status'))
@@ -32,11 +32,11 @@
         @endif
 
         <div class="login-box-body">
-            <p class="login-box-msg">Reset Password</p>
+            <p class="login-box-msg">{{ trans('adminlte_lang::message.resetpassword') }}</p>
 
             <email-reset-password-form></email-reset-password-form>
 
-            <a href="{{ url('/login') }}">Log in</a><br>
+            <br><a href="{{ url('/login') }}">{{ trans('adminlte_lang::message.login') }}</a><br>
             <a href="{{ url('/register') }}" class="text-center">{{ trans('adminlte_lang::message.registermember') }}</a>
 
         </div><!-- /.login-box-body -->

@@ -1,7 +1,7 @@
 @extends('adminlte::layouts.auth')
 
 @section('htmlheader_title')
-    Register
+    {{ trans('adminlte_lang::message.register') }}
 @endsection
 
 @section('content')
@@ -10,12 +10,12 @@
     <div id="app" v-cloak>
         <div class="register-box">
             <div class="register-logo">
-                <a href="{{ url('/home') }}"><b>Admin</b>LTE</a>
+                <a href="{{ url('/home') }}"><b>Stork </b>CRM</a>
             </div>
 
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
-                    <strong>Whoops!</strong> {{ trans('adminlte_lang::message.someproblems') }}<br><br>
+                    <strong>{{ trans('adminlte_lang::message.whoops') }}!</strong> {{ trans('adminlte_lang::message.someproblems') }}<br><br>
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -29,9 +29,9 @@
 
                 <register-form></register-form>
 
-                @include('adminlte::auth.partials.social_login')
+                {{-- @include('adminlte::auth.partials.social_login') --}}
 
-                <a href="{{ url('/login') }}" class="text-center">{{ trans('adminlte_lang::message.membreship') }}</a>
+                <br><a href="{{ url('/login') }}" class="text-center">{{ trans('adminlte_lang::message.membreship') }}</a>
             </div><!-- /.form-box -->
         </div><!-- /.register-box -->
     </div>
