@@ -32,6 +32,9 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 		// Directories
 		Route::resource('client-sources', 'ClientSourcesController', ['except' => ['show']]);
 
+		// Import
+		Route::get('import', 'ImportController@index')->name('import');
+
 	//});
 	
 

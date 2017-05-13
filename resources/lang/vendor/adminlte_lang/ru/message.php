@@ -131,5 +131,5 @@ return [
     'directories'             => 'Справочники',
     'whoops'                  => 'Ой',
     'resetpassword'           => 'Сброс пароля',
-
+    'import'                  => 'Импорт данных',
 ];

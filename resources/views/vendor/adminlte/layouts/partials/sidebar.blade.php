@@ -47,6 +47,7 @@
                   </ul>
                 </li>
                 <li><a href="/users"><i class="fa fa-user"></i> <span>{{ trans('adminlte_lang::message.users') }}</span></a></li>
+                <li><a href="/import"><i class="fa fa-arrow-circle-down"></i> <span>{{ trans('adminlte_lang::message.import') }}</span></a></li>
             {{-- @endif --}}
             </li>
         </ul><!-- /.sidebar-menu -->
