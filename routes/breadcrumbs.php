@@ -1,6 +1,6 @@
 <?php
 
-// Главная
+// Home
 Breadcrumbs::register('home', function($breadcrumbs)
 {
     $breadcrumbs->push(trans('adminlte_lang::message.home'), route('home'));
@@ -8,17 +8,17 @@ Breadcrumbs::register('home', function($breadcrumbs)
 
 
 /*
-* События
+* Actions
 **/
 
-// Главная > События
+// Home > Actions
 Breadcrumbs::register('actions.index', function($breadcrumbs)
 {
     $breadcrumbs->parent('home');
     $breadcrumbs->push(trans('adminlte_lang::message.actions'), route('actions.index'));
 });
 
-// Главная > События > Редактирование
+// Home > Actions > Edit
 Breadcrumbs::register('actions.edit', function($breadcrumbs, $action)
 {
     $breadcrumbs->parent('actions.index');
@@ -27,24 +27,24 @@ Breadcrumbs::register('actions.edit', function($breadcrumbs, $action)
 
 
 /*
-* Клиенты
+* Clients
 **/
 
-// Главная > Клиенты
+// Home > Clients
 Breadcrumbs::register('clients.index', function($breadcrumbs)
 {
     $breadcrumbs->parent('home');
     $breadcrumbs->push(trans('adminlte_lang::message.clients'), route('clients.index'));
 });
 
-// Главная > Клиенты > Редактирование
+// Home > Clients > Edit
 Breadcrumbs::register('clients.edit', function($breadcrumbs, $client)
 {
     $breadcrumbs->parent('clients.index');
     $breadcrumbs->push(mb_substr($client->name, 0, 50), route('clients.edit', $client));
 });
 
-// Главная > Клиенты > Просмотр
+// Home > Clients > View
 Breadcrumbs::register('clients.show', function($breadcrumbs, $client)
 {
     $breadcrumbs->parent('clients.index');
@@ -53,26 +53,52 @@ Breadcrumbs::register('clients.show', function($breadcrumbs, $client)
 
 
 /*
-* Источники клиентов
+* Client Sources
 **/
 
-// Главная > Источники клиентов
+// Home > Client Sources
 Breadcrumbs::register('client-sources.index', function($breadcrumbs)
 {
     $breadcrumbs->parent('home');
     $breadcrumbs->push(trans('adminlte_lang::message.clientsources'), route('client-sources.index'));
 });
 
-// Главная > Источники клиентов > Редактирование
+// Home > Client Sources > Edit
 Breadcrumbs::register('client-sources.edit', function($breadcrumbs, $clientsource)
 {
     $breadcrumbs->parent('client-sources.index');
-    $breadcrumbs->push(mb_substr($clientsource->name, 0, 50), route('client-sources.index'));
+    $breadcrumbs->push(mb_substr($clientsource->name, 0, 50), route('client-sources.edit'));
 });
 
-// Главная > Источники клиентов > Создание
+// Home > Client Sources > Create
 Breadcrumbs::register('client-sources.create', function($breadcrumbs)
 {
     $breadcrumbs->parent('client-sources.index');
-    $breadcrumbs->push(trans('adminlte_lang::message.creation'), route('client-sources.index'));
+    $breadcrumbs->push(trans('adminlte_lang::message.creation'), route('client-sources.create'));
+});
+
+
+/*
+* Action types
+**/
+
+// Home > Action types
+Breadcrumbs::register('action-types.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push(trans('adminlte_lang::message.clientsources'), route('action-types.index'));
+});
+
+// Home > Action types > Edit
+Breadcrumbs::register('action-types.edit', function($breadcrumbs, $clientsource)
+{
+    $breadcrumbs->parent('action-types.index');
+    $breadcrumbs->push(mb_substr($clientsource->name, 0, 50), route('action-types.edit'));
+});
+
+// Home > Action types > Create
+Breadcrumbs::register('action-types.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('action-types.index');
+    $breadcrumbs->push(trans('adminlte_lang::message.creation'), route('action-types.create'));
 });

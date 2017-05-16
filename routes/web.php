@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 	//Route::group(['middleware' => 'admin'], function () {
 	
 		// Directories
+		Route::resource('action-types', 'ActionTypesController', ['except' => ['show']]);
 		Route::resource('client-sources', 'ClientSourcesController', ['except' => ['show']]);
 
 		// Import
