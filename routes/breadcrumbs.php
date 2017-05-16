@@ -67,7 +67,7 @@ Breadcrumbs::register('client-sources.index', function($breadcrumbs)
 Breadcrumbs::register('client-sources.edit', function($breadcrumbs, $clientsource)
 {
     $breadcrumbs->parent('client-sources.index');
-    $breadcrumbs->push(mb_substr($clientsource->name, 0, 50), route('client-sources.edit'));
+    $breadcrumbs->push(mb_substr($clientsource->name, 0, 50), route('client-sources.edit', $clientsource->id));
 });
 
 // Home > Client Sources > Create
@@ -90,10 +90,10 @@ Breadcrumbs::register('action-types.index', function($breadcrumbs)
 });
 
 // Home > Action types > Edit
-Breadcrumbs::register('action-types.edit', function($breadcrumbs, $clientsource)
+Breadcrumbs::register('action-types.edit', function($breadcrumbs, $actiontype)
 {
     $breadcrumbs->parent('action-types.index');
-    $breadcrumbs->push(mb_substr($clientsource->name, 0, 50), route('action-types.edit'));
+    $breadcrumbs->push(mb_substr($actiontype->name, 0, 50), route('action-types.edit', $actiontype->id));
 });
 
 // Home > Action types > Create
