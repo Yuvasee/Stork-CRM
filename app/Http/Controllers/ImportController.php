@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-use App\ClientSource;
+use App\Import\Importer;
+//use App\ClientSource;
 /**
 use App\ActionType;
 use App\ClientType;
@@ -27,13 +28,13 @@ class ImportController extends Controller
 
         if ($request->has('action')) {
             switch ($request->action) {
+                case 'action-types':
+                    $message = ['num' => Importer::actionTypes(), 'type' => 'ClientSource'];
+                    break;
                 case 'client-sources':
-                    $message = $this->client_sources();
+                    $message = ['num' => Importer::clientSources(), 'type' => 'ActionType'];
                     break;
 /**
-                case 'action-types':
-                    $message = $this->action_types();
-                    break;
                 case 'client-types':
                     $message = $this->client_types();
                     break;
@@ -138,7 +139,7 @@ class ImportController extends Controller
 
         return ['num' => count($oldData), 'type' => 'ClientStatus'];
     }
-*/
+
     private function client_sources()
     {
     	$oldData = DB::connection('import')
@@ -163,7 +164,7 @@ class ImportController extends Controller
 
         return ['num' => count($oldData), 'type' => 'ClientSource'];
     }
-/**
+    
     private function product_groups()
     {
     	$oldData = DB::connection('import')
