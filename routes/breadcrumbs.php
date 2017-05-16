@@ -180,3 +180,29 @@ Breadcrumbs::register('product-groups.create', function($breadcrumbs)
     $breadcrumbs->parent('product-groups.index');
     $breadcrumbs->push(trans('adminlte_lang::message.creation'), route('product-groups.create'));
 });
+
+
+/*
+* User roles
+**/
+
+// Home > User roles
+Breadcrumbs::register('user-roles.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push(trans('adminlte_lang::message.userroles'), route('user-roles.index'));
+});
+
+// Home > User roles > Edit
+Breadcrumbs::register('user-roles.edit', function($breadcrumbs, $userrole)
+{
+    $breadcrumbs->parent('user-roles.index');
+    $breadcrumbs->push(mb_substr($userrole->name, 0, 50), route('user-roles.edit', $userrole->id));
+});
+
+// Home > User roles > Create
+Breadcrumbs::register('user-roles.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('user-roles.index');
+    $breadcrumbs->push(trans('adminlte_lang::message.creation'), route('user-roles.create'));
+});

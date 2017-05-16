@@ -35,6 +35,10 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 		Route::resource('client-statuses', 'ClientStatusesController', ['except' => ['show']]);
 		Route::resource('client-sources', 'ClientSourcesController', ['except' => ['show']]);
 		Route::resource('product-groups', 'ProductGroupsController', ['except' => ['show']]);
+		Route::resource('user-roles', 'UserRolesController', ['except' => ['show']]);
+		
+		// Users
+		//Route::resource('users', 'UsersController');
 
 		// Import
 		Route::get('import', 'ImportController@index')->name('import');
