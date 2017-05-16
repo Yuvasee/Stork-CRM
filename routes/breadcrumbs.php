@@ -128,3 +128,29 @@ Breadcrumbs::register('client-types.create', function($breadcrumbs)
     $breadcrumbs->parent('client-types.index');
     $breadcrumbs->push(trans('adminlte_lang::message.creation'), route('client-types.create'));
 });
+
+
+/*
+* Client statuses
+**/
+
+// Home > Client statuses
+Breadcrumbs::register('client-statuses.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push(trans('adminlte_lang::message.clientstatuses'), route('client-statuses.index'));
+});
+
+// Home > Client statuses > Edit
+Breadcrumbs::register('client-statuses.edit', function($breadcrumbs, $clientstatus)
+{
+    $breadcrumbs->parent('client-statuses.index');
+    $breadcrumbs->push(mb_substr($clientstatus->name, 0, 50), route('client-statuses.edit', $clientstatus->id));
+});
+
+// Home > Client statuses > Create
+Breadcrumbs::register('client-statuses.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('client-statuses.index');
+    $breadcrumbs->push(trans('adminlte_lang::message.creation'), route('client-statuses.create'));
+});

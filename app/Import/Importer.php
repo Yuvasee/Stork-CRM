@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use App\ClientSource;
 use App\ActionType;
 use App\ClientType;
-/**
 use App\ClientStatus;
+/**
 use App\ProductGroup;
 use App\User;
 use App\Client;
@@ -61,6 +61,30 @@ class Importer
     	};
 
         ClientType::create(['name' => 'Тип не установлен', 'sorting_num' => 999999]);
+
+        return count($oldData);
+    }
+
+    public static function clientStatuses()
+    {
+    	$oldData = DB::connection('import')
+    		->select('select * from cmb_probability_contract`');
+
+    	self::truncTable('client_statuses');
+
+        $i = 1;
+       	foreach ($oldData as $key => $value) {
+
+    		$row = [
+    			'name' => $value->Value,
+                'sorting_num' => $i * 10,
+       		];
+
+	        ClientStatus::create($row);
+            $i++;
+    	};
+
+        ClientStatus::create(['name' => 'Статус не установлен', 'sorting_num' => 999999]);
 
         return count($oldData);
     }

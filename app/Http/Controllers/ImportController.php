@@ -8,17 +8,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 use App\Import\Importer;
-//use App\ClientSource;
-/**
-use App\ActionType;
-use App\ClientType;
-use App\ClientStatus;
-use App\ProductGroup;
-use App\User;
-use App\Client;
-use App\ContactPerson;
-use App\Action;
-*/
 
 class ImportController extends Controller
 {
@@ -37,10 +26,10 @@ class ImportController extends Controller
                 case 'client-types':
                     $message = ['num' => Importer::clientTypes(), 'type' => 'ClientType'];
                     break;
-/**
                 case 'client-statuses':
-                    $message = $this->client_statuses();
+                    $message = ['num' => Importer::clientStatuses(), 'type' => 'ClientType'];
                     break;
+/**
                 case 'product-groups':
                     $message = $this->product_groups();
                     break;
