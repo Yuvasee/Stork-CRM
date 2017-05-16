@@ -1,11 +1,15 @@
 @extends('adminlte::layouts.app')
 
 @section('htmlheader_title')
-    Н{{ trans('adminlte_lang::message.clientsources') }} - {{ trans('adminlte_lang::message.creation') }}
+    {{ trans('adminlte_lang::message.clientsources') }} - {{ trans('adminlte_lang::message.creation') }}
 @endsection
 
 @section('contentheader_title')
     {{ trans('adminlte_lang::message.clientsources') }} <small>{{ trans('adminlte_lang::message.creation') }}</small>
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('client-sources.create') !!}
 @endsection
 
 @section('main-content')

@@ -8,6 +8,10 @@
     {{ trans('adminlte_lang::message.clientsources') }}
 @endsection
 
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('client-sources.index') !!}
+@endsection
+
 @section('main-content')
     <div class="row">
         <div class="col-xs-12">
@@ -33,11 +37,11 @@
                     <table id="data-tbl" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Название</th>
-                                <th>Сортировка</th>
-                                <th>Цвет</th>
-                                <th>Описание</th>
+                                <th>{{ trans('adminlte_lang::message.id') }}</th>
+                                <th>{{ trans('adminlte_lang::message.name') }}</th>
+                                <th>{{ trans('adminlte_lang::message.sort_id') }}</th>
+                                <th>{{ trans('adminlte_lang::message.color') }}</th>
+                                <th>{{ trans('adminlte_lang::message.description') }}</th>
                                 <th></th>
                             </tr>
                         </thead>

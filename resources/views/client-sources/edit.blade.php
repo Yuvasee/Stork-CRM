@@ -8,6 +8,10 @@
     {{ trans('adminlte_lang::message.clientsources') }} <small>{{ $clientsource->name }}</small>
 @endsection
 
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('client-sources.edit', $clientsource) !!}
+@endsection
+
 @section('main-content')
     <div class="row">
         <div class="col-lg-6">
