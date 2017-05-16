@@ -178,10 +178,133 @@ class Importer
         return count($oldData);
     }
 
+    public static function clients()
+    {
+        // Compare the types of customers in old and new bases
+        // and add value for no conformity
+        $oldTypes = DB::connection('import')->select('select * from cmb_type');
+        $typesMatch = [];
+        foreach ($oldTypes as $oldType) {
+            $typesMatch[$oldType->ID] = ClientType::where('name', $oldType->Value)->first()->id;
+        }
+        $typesMatch[-1] = ClientType::where('name', 'Тип не установлен')->first()->id;
+
+        // Compare statuses
+        $oldStatuses = DB::connection('import')
+            ->select('select * from cmb_probability_contract');
+        $statusesMatch = [];
+        foreach ($oldStatuses as $oldStatus) {
+            $statusesMatch[$oldStatus->ID] = ClientStatus::where('name', $oldStatus->Value)->first()->id;
+        }
+        $statusesMatch[-1] = ClientStatus::where('name', 'Статус не установлен')->first()->id;
+
+        // Compare sources
+        $oldSources = DB::connection('import')
+            ->select('select * from cmb_clientfrom');
+        $sourcesMatch = [];
+        foreach ($oldSources as $oldSource) {
+            $sourcesMatch[$oldSource->ID] = ClientSource::where('name', $oldSource->Value)->first()->id;
+        }
+        $sourcesMatch[-1] = ClientSource::where('name', 'Источник не установлен')->first()->id;
+
+        // Compare users
+        $oldUsers = DB::connection('import')
+            ->select('select * from users');
+        $usersMatch = [];
+        foreach ($oldUsers as $oldUser) {
+            $usersMatch[$oldUser->user_id] = User::where('name', $oldUser->name . ' ' . $oldUser->surname)->first()->id;
+        }
+
+        // Moving clients begins here
+        $oldClients = DB::connection('import')->select('select * from clients');
+
+        self::truncTable('clients');
+
+        $clientsMatch = [];
+        foreach ($oldClients as $oldClient) {
+
+            // Change &quot; for "
+            $oldClient->name = mb_ereg_replace('&quot;', '"', $oldClient->name);
+
+            // Save inappropriate data into additional info field
+            $additional_info = [];
+            if($oldClient->production) array_push($additional_info, 'Продукция по состояниям: ' . $oldClient->production);
+            if($oldClient->production_stad) array_push($additional_info, 'Продукция по стадиям: ' . $oldClient->production_stad);
+            if(strlen($oldClient->name) > 191){
+                array_push($additional_info, 'Название: ' . $oldClient->name);
+                $oldClient->name = mb_substr($oldClient->name, 0, 191);
+            }
+            if(strlen($oldClient->phones) > 191){
+                array_push($additional_info, 'Телефоны: ' . $oldClient->phones);
+                $oldClient->phones = mb_substr($oldClient->phones, 0, 191);
+            }
+            if(strlen($oldClient->email) > 191){
+                array_push($additional_info, 'Email: ' . $oldClient->email);
+                $oldClient->email = mb_substr($oldClient->email, 0, 191);
+            }
+            if(strlen($oldClient->sity) > 191){
+                array_push($additional_info, 'Город: ' . $oldClient->sity);
+                $oldClient->sity = mb_substr($oldClient->sity, 0, 191);
+            }
+            if(strlen($oldClient->region_name) > 191){
+                array_push($additional_info, 'Регион: ' . $oldClient->region_name);
+                $oldClient->region_name = mb_substr($oldClient->region_name, 0, 191);
+            }
+            if(strlen($oldClient->region_code) > 191){
+                array_push($additional_info, 'Код региона: ' . $oldClient->region_code);
+                $oldClient->region_code = mb_substr($oldClient->region_code, 0, 191);
+            }
+            if(strlen($oldClient->signs) > 191){
+                array_push($additional_info, 'Признак: ' . $oldClient->signs);
+                $oldClient->signs = mb_substr($oldClient->signs, 0, 191);
+            }
+            if(strlen($oldClient->Sites) > 191){
+                array_push($additional_info, 'Сайты: ' . $oldClient->Sites);
+                $oldClient->Sites = mb_substr($oldClient->Sites, 0, 191);
+            }
+
+            // Fill client data and insert to DB
+            $row = [
+                'name' => $oldClient->name,
+                'client_type_id' => isset($typesMatch[$oldClient->cmb_type]) ? $typesMatch[$oldClient->cmb_type] : $typesMatch[-1],
+                'client_status_id' => isset($statusesMatch[$oldClient->cmb_probability_contract]) ? $statusesMatch[$oldClient->cmb_probability_contract] : $statusesMatch[-1],
+                'client_source_id' => isset($sourcesMatch[$oldClient->cmb_clientfrom]) ? $sourcesMatch[$oldClient->cmb_clientfrom] : $sourcesMatch[-1],
+                'manager_user_id' => ($oldClient->UID > 0) ? $usersMatch[$oldClient->UID] : config('import.admin_user_id', 1),
+                'phone_number' => $oldClient->phones,
+                'email' => $oldClient->email,
+                'address' => $oldClient->full_adress,
+                'post_address' => $oldClient->post_adress,
+                'city' => $oldClient->sity,
+                'region' => $oldClient->region_name,
+                'region_code' => $oldClient->region_code,
+                'tags' => $oldClient->signs,
+                'additional_info' => implode("\n", $additional_info),
+                'website' => $oldClient->Sites,
+                'created_by_user_id' => config('import.admin_user_id', 1),
+                'created_at' => $oldClient->addition_date,
+            ];
+
+            $clientsMatch[$oldClient->client_id] = Client::create($row)->id;
+
+        };
+
+        // Fill old-new IDs table
+        DB::table('client_old_new')->delete();
+        foreach ($clientsMatch as $key => $value) {
+            DB::table('client_old_new')->insert(
+                ['old_client_id' => $key, 'new_client_id' => $value]
+            );
+        }
+
+        return count($oldClients);
+
+    }
+
     private static function truncTable($tbl)
     {
     	DB::statement('set foreign_key_checks = 0');
         DB::table($tbl)->truncate();
         DB::statement('set foreign_key_checks = 1');    	
     }
+
 }
