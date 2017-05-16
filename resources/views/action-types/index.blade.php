@@ -63,7 +63,7 @@
                                                 'type' => 'submit',
                                                 'class' => 'btn btn-danger btn-xs',
                                                 'title' => 'Delete ActionType',
-                                                'onclick'=>'return confirm("' . trans('adminlte_lang::message.confirm_delete') . '?")'
+                                                'onclick'=>'return confirm("' . trans('adminlte_lang::message.confirmdelete') . '?")'
                                         )) !!}
                                     {!! Form::close() !!}
                                 </td>

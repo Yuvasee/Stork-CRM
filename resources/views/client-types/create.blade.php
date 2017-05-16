@@ -1,11 +1,11 @@
 @extends('adminlte::layouts.app')
 
 @section('htmlheader_title')
-    {{ trans('adminlte_lang::message.actiontypes') }} - {{ trans('adminlte_lang::message.creation') }}
+    {{ trans('adminlte_lang::message.clienttypes') }} - {{ trans('adminlte_lang::message.creation') }}
 @endsection
 
 @section('contentheader_title')
-    {{ trans('adminlte_lang::message.actiontypes') }} <small>{{ trans('adminlte_lang::message.creation') }}</small>
+    {{ trans('adminlte_lang::message.clienttypes') }} <small>{{ trans('adminlte_lang::message.creation') }}</small>
 @endsection
 
 @section('breadcrumbs')
@@ -17,7 +17,7 @@
         <div class="col-lg-6">
             <div class="box box-primary">
                 <div class="box-body">
-                    <a href="{{ url('/action-types') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ trans('adminlte_lang::message.back') }}</button></a>
+                    <a href="{{ url('/client-types') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ trans('adminlte_lang::message.back') }}</button></a>
                     <br />
                     <br />
 
@@ -29,9 +29,9 @@
                         </ul>
                     @endif
 
-                    {!! Form::open(['url' => '/action-types', 'class' => 'form-horizontal', 'files' => true]) !!}
+                    {!! Form::open(['url' => '/client-types', 'class' => 'form-horizontal', 'files' => true]) !!}
 
-                    @include ('action-types.form')
+                    @include ('client-types.form')
 
                     {!! Form::close() !!}
 

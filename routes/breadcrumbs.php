@@ -86,7 +86,7 @@ Breadcrumbs::register('client-sources.create', function($breadcrumbs)
 Breadcrumbs::register('action-types.index', function($breadcrumbs)
 {
     $breadcrumbs->parent('home');
-    $breadcrumbs->push(trans('adminlte_lang::message.clientsources'), route('action-types.index'));
+    $breadcrumbs->push(trans('adminlte_lang::message.actiontypes'), route('action-types.index'));
 });
 
 // Home > Action types > Edit
@@ -101,4 +101,30 @@ Breadcrumbs::register('action-types.create', function($breadcrumbs)
 {
     $breadcrumbs->parent('action-types.index');
     $breadcrumbs->push(trans('adminlte_lang::message.creation'), route('action-types.create'));
+});
+
+
+/*
+* Client types
+**/
+
+// Home > Client types
+Breadcrumbs::register('client-types.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push(trans('adminlte_lang::message.clienttypes'), route('client-types.index'));
+});
+
+// Home > Client types > Edit
+Breadcrumbs::register('client-types.edit', function($breadcrumbs, $clienttype)
+{
+    $breadcrumbs->parent('client-types.index');
+    $breadcrumbs->push(mb_substr($clienttype->name, 0, 50), route('client-types.edit', $clienttype->id));
+});
+
+// Home > Client types > Create
+Breadcrumbs::register('client-types.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('client-types.index');
+    $breadcrumbs->push(trans('adminlte_lang::message.creation'), route('client-types.create'));
 });

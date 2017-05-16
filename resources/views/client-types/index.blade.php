@@ -1,15 +1,15 @@
 @extends('adminlte::layouts.app')
 
 @section('htmlheader_title')
-    {{ trans('adminlte_lang::message.clientsources') }}
+    {{ trans('adminlte_lang::message.clienttypes') }}
 @endsection
 
 @section('contentheader_title')
-    {{ trans('adminlte_lang::message.clientsources') }}
+    {{ trans('adminlte_lang::message.clienttypes') }}
 @endsection
 
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('client-sources.index') !!}
+    {!! Breadcrumbs::render('client-types.index') !!}
 @endsection
 
 @section('main-content')
@@ -17,11 +17,11 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-body">
-                    <a href="{{ url('/client-sources/create') }}" class="btn btn-success btn-sm" title="Add New ClientSource">
+                    <a href="{{ url('/client-types/create') }}" class="btn btn-success btn-sm" title="Add New ClientType">
                         <i class="fa fa-plus" aria-hidden="true"></i> {{ trans('adminlte_lang::message.add') }}
                     </a>
 
-                    {!! Form::open(['method' => 'GET', 'url' => '/client-sources', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
+                    {!! Form::open(['method' => 'GET', 'url' => '/client-types', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                     <div class="input-group">
                         <input type="text" class="form-control" name="search" placeholder="{{ trans('adminlte_lang::message.search') }}...">
                         <span class="input-group-btn">
@@ -46,23 +46,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($clientsources as $item)
+                        @foreach($clienttypes as $item)
                             <tr>
                                 <td>{{ $item->id }}</td>
-                                <td><a href="{{ url('/client-sources/' . $item->id . '/edit') }}" title="Edit ClientSource">{{ $item->name }}</a></td>
+                                <td><a href="{{ url('/client-types/' . $item->id . '/edit') }}" title="Edit ClientType">{{ $item->name }}</a></td>
                                 <td>{{ $item->sorting_num }}</td>
                                 <td><span style="color: {{ $item->color }}">{{ $item->color }}</span></td>
                                 <td>{{ $item->description }}</td>
                                 <td>
                                     {!! Form::open([
                                         'method'=>'DELETE',
-                                        'url' => ['/client-sources', $item->id],
+                                        'url' => ['/client-types', $item->id],
                                         'style' => 'display:inline'
                                     ]) !!}
                                         {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
                                                 'type' => 'submit',
                                                 'class' => 'btn btn-danger btn-xs',
-                                                'title' => 'Delete ClientSource',
+                                                'title' => 'Delete ClientType',
                                                 'onclick'=>'return confirm("' . trans('adminlte_lang::message.confirmdelete') . '?")'
                                         )) !!}
                                     {!! Form::close() !!}

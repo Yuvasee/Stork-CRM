@@ -34,10 +34,10 @@ class ImportController extends Controller
                 case 'client-sources':
                     $message = ['num' => Importer::clientSources(), 'type' => 'ActionType'];
                     break;
-/**
                 case 'client-types':
-                    $message = $this->client_types();
+                    $message = ['num' => Importer::clientTypes(), 'type' => 'ClientType'];
                     break;
+/**
                 case 'client-statuses':
                     $message = $this->client_statuses();
                     break;
@@ -164,7 +164,7 @@ class ImportController extends Controller
 
         return ['num' => count($oldData), 'type' => 'ClientSource'];
     }
-    
+
     private function product_groups()
     {
     	$oldData = DB::connection('import')
