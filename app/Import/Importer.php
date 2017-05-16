@@ -9,8 +9,8 @@ use App\ClientSource;
 use App\ActionType;
 use App\ClientType;
 use App\ClientStatus;
-/**
 use App\ProductGroup;
+/**
 use App\User;
 use App\Client;
 use App\ContactPerson;
@@ -108,6 +108,28 @@ class Importer
     	};
 
         ClientSource::create(['name' => 'Источник не установлен', 'sorting_num' => 999999]);
+
+        return count($oldData);
+    }
+
+    public static function productGroups()
+    {
+    	$oldData = DB::connection('import')
+    		->select('select * from products_types');
+
+    	self::truncTable('product_groups');
+
+    	$i = 1;
+        foreach ($oldData as $key => $value) {
+
+    		$row = [
+    			'name' => $value->name,
+                'sorting_num' => $i * 10,
+    		];
+
+	        ProductGroup::create($row);
+            $i++;
+    	};
 
         return count($oldData);
     }

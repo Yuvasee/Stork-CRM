@@ -154,3 +154,29 @@ Breadcrumbs::register('client-statuses.create', function($breadcrumbs)
     $breadcrumbs->parent('client-statuses.index');
     $breadcrumbs->push(trans('adminlte_lang::message.creation'), route('client-statuses.create'));
 });
+
+
+/*
+* Product groups
+**/
+
+// Home > Product groups
+Breadcrumbs::register('product-groups.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push(trans('adminlte_lang::message.productgroups'), route('product-groups.index'));
+});
+
+// Home > Product groups > Edit
+Breadcrumbs::register('product-groups.edit', function($breadcrumbs, $productgroup)
+{
+    $breadcrumbs->parent('product-groups.index');
+    $breadcrumbs->push(mb_substr($productgroup->name, 0, 50), route('product-groups.edit', $productgroup->id));
+});
+
+// Home > Product groups > Create
+Breadcrumbs::register('product-groups.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('product-groups.index');
+    $breadcrumbs->push(trans('adminlte_lang::message.creation'), route('product-groups.create'));
+});

@@ -29,10 +29,10 @@ class ImportController extends Controller
                 case 'client-statuses':
                     $message = ['num' => Importer::clientStatuses(), 'type' => 'ClientType'];
                     break;
-/**
                 case 'product-groups':
-                    $message = $this->product_groups();
+                    $message = ['num' => Importer::productGroups(), 'type' => 'ClientType'];
                     break;
+/**
                 case 'users':
                     $message = $this->users();
                     break;
@@ -56,125 +56,6 @@ class ImportController extends Controller
     }
 
 /**
-    private function action_types()
-    {
-    	$oldData = DB::connection('import')
-    		->select('select * from cmb_action_type`');
-
-    	DB::table('action_types')->truncate();
-
-    	foreach ($oldData as $key => $value) {
-
-    		$row = [
-    			'name' => $value->Value,
-    			'sorting_num' => $value->SortID,
-    		];
-
-	        ActionType::create($row);
-
-    	};
-
-        ActionType::create(['name' => 'Тип не установлен', 'sorting_num' => 999999]);
-
-        return [
-            'num' => count($oldData),
-            'type' => 'ActionType'
-        ];
-    }
-
-    private function client_types()
-    {
-    	$oldData = DB::connection('import')
-    		->select('select * from cmb_type`');
-
-    	DB::table('client_types')->truncate();
-
-    	$i = 1;
-        foreach ($oldData as $key => $value) {
-    		$row = [
-    			'name' => $value->Value,
-                'sorting_num' => $i * 10,
-    		];
-
-	        ClientType::create($row);
-            $i++;
-    	};
-
-        ClientType::create(['name' => 'Тип не установлен', 'sorting_num' => 999999]);
-
-        return ['num' => count($oldData), 'type' => 'ClientType'];
-    }
-
-    private function client_statuses()
-    {
-    	$oldData = DB::connection('import')
-    		->select('select * from cmb_probability_contract`');
-
-    	DB::table('client_statuses')->truncate();
-
-        $i = 1;
-       	foreach ($oldData as $key => $value) {
-
-    		$row = [
-    			'name' => $value->Value,
-                'sorting_num' => $i * 10,
-       		];
-
-	        ClientStatus::create($row);
-            $i++;
-    	};
-
-        ClientStatus::create(['name' => 'Статус не установлен', 'sorting_num' => 999999]);
-
-        return ['num' => count($oldData), 'type' => 'ClientStatus'];
-    }
-
-    private function client_sources()
-    {
-    	$oldData = DB::connection('import')
-    		->select('select * from cmb_clientfrom');
-
-    	DB::statement('set foreign_key_checks = 0');
-        DB::table('client_sources')->truncate();
-        DB::statement('set foreign_key_checks = 1');
-
-    	foreach ($oldData as $key => $value) {
-
-    		$row = [
-    			'name' => $value->Value,
-    			'sorting_num' => $value->SortID,
-    		];
-
-	        ClientSource::create($row);
-
-    	};
-
-        ClientSource::create(['name' => 'Источник не установлен', 'sorting_num' => 999999]);
-
-        return ['num' => count($oldData), 'type' => 'ClientSource'];
-    }
-
-    private function product_groups()
-    {
-    	$oldData = DB::connection('import')
-    		->select('select * from products_types');
-
-    	DB::table('product_groups')->truncate();
-
-    	$i = 1;
-        foreach ($oldData as $key => $value) {
-
-    		$row = [
-    			'name' => $value->name,
-                'sorting_num' => $i * 10,
-    		];
-
-	        ProductGroup::create($row);
-            $i++;
-    	};
-
-        return ['num' => count($oldData), 'type' => 'ProductGroup'];
-    }
 
     private function users()
     {
