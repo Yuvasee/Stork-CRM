@@ -36,9 +36,9 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 		Route::resource('client-sources', 'ClientSourcesController', ['except' => ['show']]);
 		Route::resource('product-groups', 'ProductGroupsController', ['except' => ['show']]);
 		Route::resource('user-roles', 'UserRolesController', ['except' => ['show']]);
-		
+
 		// Users
-		//Route::resource('users', 'UsersController');
+		Route::resource('users', 'UsersController', ['except' => ['show']]);
 
 		// Import
 		Route::get('import', 'ImportController@index')->name('import');

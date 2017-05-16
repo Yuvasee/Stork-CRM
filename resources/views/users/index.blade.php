@@ -1,15 +1,15 @@
 @extends('adminlte::layouts.app')
 
 @section('htmlheader_title')
-    {{ trans('adminlte_lang::message.userroles') }}
+    {{ trans('adminlte_lang::message.users') }}
 @endsection
 
 @section('contentheader_title')
-    {{ trans('adminlte_lang::message.userroles') }}
+    {{ trans('adminlte_lang::message.users') }}
 @endsection
 
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('user-roles.index') !!}
+    {!! Breadcrumbs::render('users.index') !!}
 @endsection
 
 @section('main-content')
@@ -17,11 +17,11 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-body">
-                    <a href="{{ url('/user-roles/create') }}" class="btn btn-success btn-sm" title="Add New UserRole">
+                    <a href="{{ url('/users/create') }}" class="btn btn-success btn-sm" title="Add New User">
                         <i class="fa fa-plus" aria-hidden="true"></i> {{ trans('adminlte_lang::message.add') }}
                     </a>
 
-                    {!! Form::open(['method' => 'GET', 'url' => '/user-roles', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
+                    {!! Form::open(['method' => 'GET', 'url' => '/users', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                     <div class="input-group">
                         <input type="text" class="form-control" name="search" placeholder="{{ trans('adminlte_lang::message.search') }}...">
                         <span class="input-group-btn">
@@ -39,26 +39,35 @@
                             <tr>
                                 <th>{{ trans('adminlte_lang::message.id') }}</th>
                                 <th>{{ trans('adminlte_lang::message.name') }}</th>
-                                <th>{{ trans('adminlte_lang::message.description') }}</th>
+                                <th>{{ trans('adminlte_lang::message.email') }}</th>
+                                <th>{{ trans('adminlte_lang::message.role') }}</th>
+                                <th>{{ trans('adminlte_lang::message.phone') }}</th>
+                                <th>{{ trans('adminlte_lang::message.birthday') }}</th>
+                                <th>{{ trans('adminlte_lang::message.hired') }}</th>
+                                <th>{{ trans('adminlte_lang::message.fired') }}</th>
                                 <th></th>
                             </tr>
-                        </thead>
                         <tbody>
-                        @foreach($userroles as $item)
+                        @foreach($users as $item)
                             <tr>
                                 <td>{{ $item->id }}</td>
-                                <td><a href="{{ url('/user-roles/' . $item->id . '/edit') }}" title="Edit UserRoles">{{ $item->name }}</a></td>
-                                <td>{{ $item->description }}</td>
+                                <td><a href="{{ url('/users/' . $item->id . '/edit') }}" title="Edit User">{{ $item->name }}</a></td>
+                                <td>{{ $item->email }}</td>
+                                <td>{{ $item->role['name'] }}</td>
+                                <td>{{ $item->phone_number }}</td>
+                                <td>{{ $item->birthday }}</td>
+                                <td>{{ $item->hired_date }}</td>
+                                <td>{{ $item->fired_date }}</td>
                                 <td>
                                     {!! Form::open([
                                         'method'=>'DELETE',
-                                        'url' => ['/user-roles', $item->id],
+                                        'url' => ['/users', $item->id],
                                         'style' => 'display:inline'
                                     ]) !!}
                                         {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
                                                 'type' => 'submit',
                                                 'class' => 'btn btn-danger btn-xs',
-                                                'title' => 'Delete UserRole',
+                                                'title' => 'Delete User',
                                                 'onclick'=>'return confirm("' . trans('adminlte_lang::message.confirmdelete') . '?")'
                                         )) !!}
                                     {!! Form::close() !!}

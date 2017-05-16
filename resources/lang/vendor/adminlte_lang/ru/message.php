@@ -56,7 +56,7 @@ return [
     'anotherlink'             => 'Другая Ссылка',
     'multilevel'              => 'Многоуровневый',
     'linklevel2'              => 'Ссылка на уровень 2',
-    'birthday'                => 'День рождения Langdon',
+    'birthday'                => 'День рождения',
     'birthdaydate'            => '24-го апреля исполнится 23',
     'progress'                => 'Прогресс Задач',
     'customtemplate'          => 'Дизайн Своего Шаблона',
@@ -136,5 +136,9 @@ return [
     'sort_id'                 => 'Сортировка',
     'color'                   => 'Цвет',
     'id'                      => 'ID',
-    'confirmdelete'           => 'Подтвердить удаление'
+    'confirmdelete'           => 'Подтвердить удаление',
+    'phone'           => 'Телефон',
+    'hired'           => 'Нанят',
+    'fired'           => 'Уволен',
+    'role'           => 'Роль',
 ];

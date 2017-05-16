@@ -27,15 +27,15 @@ class ImportController extends Controller
                     $message = ['num' => Importer::clientTypes(), 'type' => 'ClientType'];
                     break;
                 case 'client-statuses':
-                    $message = ['num' => Importer::clientStatuses(), 'type' => 'ClientType'];
+                    $message = ['num' => Importer::clientStatuses(), 'type' => 'ClientStatus'];
                     break;
                 case 'product-groups':
-                    $message = ['num' => Importer::productGroups(), 'type' => 'ClientType'];
+                    $message = ['num' => Importer::productGroups(), 'type' => 'ProductGroup'];
+                    break;
+                case 'users':
+                    $message = ['num' => Importer::users(), 'type' => 'User'];
                     break;
 /**
-                case 'users':
-                    $message = $this->users();
-                    break;
                 case 'clients':
                     $message = $this->clients();
                     break;
@@ -56,49 +56,6 @@ class ImportController extends Controller
     }
 
 /**
-
-    private function users()
-    {
-        $oldData = DB::connection('import')
-            ->select('select * from users');
-
-        DB::table('users')->where('id', '<>', 1)->delete();
-
-        // Ищем и меняем одинаковые email
-        $emails = [];
-        $i = 1;
-        foreach ($oldData as $key => $value) {
-            if(array_search($value->email_work, $emails)){
-                array_push($emails, preg_replace('([_[:alnum:]]+)(@.+)', '${1}' . $i . '$2', $value->email_work));
-                $i++;
-            }
-            else {
-                array_push($emails, $value->email_work);
-            }
-        }
-
-        foreach ($oldData as $key => $value) {
-
-            $pass = str_random(6);
-
-            $row = [
-                'name' => $value->name . ' ' . $value->surname,
-                'email' => $emails[$key],
-                'password' => Hash::make($pass),
-                'user_role_id' => 2,
-                'phone_number' => $value->phone_mobile,
-                'birthday' => $value->birthday,
-                'hired_date' => $value->work_start_date,
-                'fired_date' => $value->work_end_date,
-                'about' => $pass,
-            ];
-
-            User::create($row);
-
-        };
-
-        return ['num' => count($oldData), 'type' => 'User'];
-    }
 
     private function clients()
     {

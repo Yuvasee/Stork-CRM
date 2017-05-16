@@ -206,3 +206,29 @@ Breadcrumbs::register('user-roles.create', function($breadcrumbs)
     $breadcrumbs->parent('user-roles.index');
     $breadcrumbs->push(trans('adminlte_lang::message.creation'), route('user-roles.create'));
 });
+
+
+/*
+* Users
+**/
+
+// Home > Users
+Breadcrumbs::register('users.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push(trans('adminlte_lang::message.users'), route('users.index'));
+});
+
+// Home > Users > Edit
+Breadcrumbs::register('users.edit', function($breadcrumbs, $user)
+{
+    $breadcrumbs->parent('users.index');
+    $breadcrumbs->push(mb_substr($user->name, 0, 50), route('users.edit', $user->id));
+});
+
+// Home > Users > Create
+Breadcrumbs::register('users.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('users.index');
+    $breadcrumbs->push(trans('adminlte_lang::message.creation'), route('users.create'));
+});

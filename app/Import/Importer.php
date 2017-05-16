@@ -10,12 +10,10 @@ use App\ActionType;
 use App\ClientType;
 use App\ClientStatus;
 use App\ProductGroup;
-/**
 use App\User;
 use App\Client;
 use App\ContactPerson;
 use App\Action;
-*/
 
 class Importer
 {
@@ -130,6 +128,52 @@ class Importer
 	        ProductGroup::create($row);
             $i++;
     	};
+
+        return count($oldData);
+    }
+
+    public static function users()
+    {
+        $oldData = DB::connection('import')
+            ->select('select * from users');
+
+    	// Delete all users but admin
+    	DB::statement('set foreign_key_checks = 0');
+        DB::table('users')->where('id', '<>', config('import.admin_user_id', 1))->delete();
+        DB::statement('set foreign_key_checks = 1'); 
+
+        // Check email duplicates and make them unique
+        $emails = [];
+        $i = 1;
+        foreach ($oldData as $key => $value) {
+            if(array_search($value->email_work, $emails)){
+                array_push($emails, preg_replace('([_[:alnum:]]+)(@.+)', '${1}' . $i . '$2', $value->email_work));
+                $i++;
+            }
+            else {
+                array_push($emails, $value->email_work);
+            }
+        }
+
+        foreach ($oldData as $key => $value) {
+
+            $pass = str_random(6);
+
+            $row = [
+                'name' => $value->name . ' ' . $value->surname,
+                'email' => $emails[$key],
+                'password' => Hash::make($pass),
+                'user_role_id' => config('import.manager_user_role_id', 2),
+                'phone_number' => $value->phone_mobile,
+                'birthday' => $value->birthday,
+                'hired_date' => $value->work_start_date,
+                'fired_date' => $value->work_end_date,
+                'about' => $pass,
+            ];
+
+            User::create($row);
+
+        };
 
         return count($oldData);
     }
