@@ -17,7 +17,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 
 	Route::get('/', function () {
 	    // return redirect('actions');
-	    return redirect('client-sources');
+	    return redirect('actions');
 	})->name('home');
 
 	// Main page (laravel-adminlte hardcoded after-login redirect)
@@ -38,7 +38,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 
 	// Administrators area
 	//
-	//Route::group(['middleware' => 'admin'], function () {
+	Route::group(['middleware' => 'admin'], function () {
 	
 		// Directories
 		Route::resource('action-types', 'ActionTypesController', ['except' => ['show']]);
@@ -54,7 +54,7 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 		// Import
 		Route::get('import', 'ImportController@index')->name('import');
 
-	//});
+	});
 	
 
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
