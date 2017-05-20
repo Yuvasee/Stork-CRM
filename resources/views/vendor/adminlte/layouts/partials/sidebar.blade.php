@@ -24,7 +24,7 @@
             <li class="header">{{ trans('adminlte_lang::message.sidebar_h_work') }}</li>
             <li><a href="/actions"><i class='fa fa-clock-o'></i> <span>{{ trans('adminlte_lang::message.actions') }}</span></a></li>
             <li><a href="/clients"><i class='fa fa-smile-o'></i> <span>{{ trans('adminlte_lang::message.clients') }}</span></a></li>
-            {{-- @if(auth()->user()->isAdmin()) --}}
+            @if(auth()->user()->isAdmin())
                 <li class="header">{{ trans('adminlte_lang::message.sidebar_h_stats') }}</li>
                 <li><a href="/stats/overdue"><i class="fa fa-exclamation-circle"></i> <span>{{ trans('adminlte_lang::message.stat_overdue') }}</span></a></li>
                 <li><a href="/stats/output"><i class="fa fa-phone-square"></i> <span>{{ trans('adminlte_lang::message.stat_output') }}</span></a></li>
@@ -48,7 +48,7 @@
                 </li>
                 <li><a href="/users"><i class="fa fa-user"></i> <span>{{ trans('adminlte_lang::message.users') }}</span></a></li>
                 <li><a href="/import"><i class="fa fa-arrow-circle-down"></i> <span>{{ trans('adminlte_lang::message.import') }}</span></a></li>
-            {{-- @endif --}}
+            @endif
             </li>
         </ul><!-- /.sidebar-menu -->
     </section>
