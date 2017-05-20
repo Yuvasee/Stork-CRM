@@ -17,9 +17,9 @@
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#info-tab" aria-controls="info-tab" role="tab" data-toggle="tab">Информация</a></li>
-        <li role="presentation"><a href="#past-tab" aria-controls="past-tab" role="tab" data-toggle="tab">Прошедшие события</a></li>
-        <li role="presentation"><a href="#future-tab" aria-controls="future-tab" role="tab" data-toggle="tab">Планируемые события</a></li>
+        <li role="presentation" class="active"><a href="#info-tab" aria-controls="info-tab" role="tab" data-toggle="tab">{{ trans('adminlte_lang::message.information') }}</a></li>
+        <li role="presentation"><a href="#past-tab" aria-controls="past-tab" role="tab" data-toggle="tab">{{ trans('adminlte_lang::message.actionscompleted') }}</a></li>
+        <li role="presentation"><a href="#future-tab" aria-controls="future-tab" role="tab" data-toggle="tab">{{ trans('adminlte_lang::message.actionscompleted') }}</a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -33,23 +33,23 @@
                         <form class="form-horizontal">
                         <div class="box-body">
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Название</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.name') }}</label>
                                 <p class="col-lg-9 form-control-static">{{ $client->name }}</p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Тип</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.type') }}</label>
                                 <p class="col-lg-9 form-control-static">{{ $client->type->name }}</p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Статус</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.status') }}</label>
                                 <p class="col-lg-9 form-control-static">{{ $client->status->name }}</p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Источник</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.source') }}</label>
                                 <p class="col-lg-9 form-control-static">{{ $client->source->name }}</p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Товарные группы</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.productgroups') }}</label>
                                 <p class="col-lg-9 form-control-static">
                                     @foreach ($productGroups as $productGroup)
                                         @if(!$loop->last)
@@ -61,55 +61,55 @@
                                 </p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Менеджер</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.manager') }}</label>
                                 <p class="col-lg-9 form-control-static"><i class="fa fa-user"></i> {{ $client->manager->name }}</p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Номер телефона</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.phonenumber') }}</label>
                                 <p class="col-lg-9 form-control-static">{{ $client->phone_number }}</p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Email</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.email') }}</label>
                                 <p class="col-lg-9 form-control-static">{{ $client->email }}</p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Адрес</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.address') }}</label>
                                 <p class="col-lg-9 form-control-static">{{ $client->address }}</p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Почтовый адрес</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.postaddress') }}</label>
                                 <p class="col-lg-9 form-control-static">{{ $client->post_address }}</p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Город</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.city') }}</label>
                                 <p class="col-lg-9 form-control-static">{{ $client->city }}</p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Регион</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.region') }}</label>
                                 <p class="col-lg-9 form-control-static">{{ $client->region }}</p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Код(ы) региона</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.regioncodes') }}</label>
                                 <p class="col-lg-9 form-control-static">{{ $client->region_code }}</p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Признак</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.tags') }}</label>
                                 <p class="col-lg-9 form-control-static">{{ $client->tags }}</p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Вебсайт</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.website') }}</label>
                                 <p class="col-lg-9 form-control-static">{{ $client->website }}</p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Дополнительная информация</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.additionalinfo') }}</label>
                                 <p class="col-lg-9 form-control-static">{{ $client->additional_info }}</p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Дата создания</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.creationdate') }}</label>
                                 <p class="col-lg-9 form-control-static">{{ $client->created_at->format('d.m.Y') }}</p>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Создал</label>
+                                <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.creator') }}</label>
                                 <p class="col-lg-9 form-control-static"><i class="fa fa-user"></i> {{ $client->createdBy->name }}</p>
                             </div>
                         </div>
@@ -125,19 +125,19 @@
                             <form class="form-horizontal">
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label class="col-lg-3 control-label">Рабочий телефон</label>
+                                    <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.phonework') }}</label>
                                     <p class="col-lg-9 form-control-static">{{ $contactPerson['phone_work'] }}</p>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-3 control-label">Мобильный телефон</label>
+                                    <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.phonemob') }}</label>
                                     <p class="col-lg-9 form-control-static">{{ $contactPerson['phone_mobile'] }}</p>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-3 control-label">Email</label>
+                                    <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.email') }}</label>
                                     <p class="col-lg-9 form-control-static">{{ $contactPerson['email'] }}</p>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-lg-3 control-label">Заметки</label>
+                                    <label class="col-lg-3 control-label">{{ trans('adminlte_lang::message.notes') }}</label>
                                     <p class="col-lg-9 form-control-static">{{ $contactPerson['notes'] }}</p>
                                 </div>
                             </div>

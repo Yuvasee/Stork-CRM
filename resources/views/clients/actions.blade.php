@@ -10,13 +10,13 @@
                 <table id="actions-table" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>{{ trans('adminlte_lang::message.id') }}</th>
                             <th></th>
-                            <th>Дата</th>
-                            <th>Менеджер</th>
-                            <th>Тип</th>
-                            <th>Описание</th>
-                            <th>Признак</th>
+                            <th>{{ trans('adminlte_lang::message.date') }}</th>
+                            <th>{{ trans('adminlte_lang::message.manager') }}</th>
+                            <th>{{ trans('adminlte_lang::message.type') }}</th>
+                            <th>{{ trans('adminlte_lang::message.description') }}</th>
+                            <th>{{ trans('adminlte_lang::message.tags') }}</th>
                             @if(auth()->user()->can('update', $client))
                                 <th></th>
                             @endif
@@ -70,7 +70,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <p style="margin-top: 0.5em">Всего событий: {{ count($actions) }}.</p>
+                <p style="margin-top: 0.5em">{{ trans('adminlte_lang::message.actionscount') }}: {{ count($actions) }}.</p>
             </div>
         </div>
     </div>

@@ -16,14 +16,14 @@
     <div class="row">
         <div class="col-md-12">
 
-            {{-- ФИЛЬТР --}}
+            {{-- FILTER --}}
             <div class="box box-default">
                 <div class="box-body">
                     {!! Form::open(['method' => 'GET', 'url' => '/clients', 'role' => 'search'])  !!}
                     <div class="row">
-                        {{-- Менеджер --}}
+                        {{-- Manager --}}
                         <div class="col-lg-3 col-sm-6 form-group">
-                            <label for="filterManager">Менеджер</label>
+                            <label for="filterManager">{{ trans('adminlte_lang::message.manager') }}</label>
                             {!! Form::select('filterManager',
                                 ['0' => '_все'] + $users->toArray(),
                                 $filter['manager'],
@@ -34,7 +34,7 @@
                                 ]) !!}
                         </div>
 
-                        {{-- Тип клиента --}}
+                        {{-- Type --}}
                         <div class="col-lg-3 col-sm-6 form-group">
                             <label for="filterType">{{ trans('adminlte_lang::message.clienttype') }}</label>
                             {!! Form::select('filterType',
@@ -47,15 +47,15 @@
                                 ]) !!}
                         </div>
 
-                        {{-- Город --}}
+                        {{-- City --}}
                         <div class="col-lg-3 col-sm-6 form-group">
-                            <label for="filterCity">Город</label>
+                            <label for="filterCity">{{ trans('adminlte_lang::message.city') }}</label>
                             <input type="text" class="form-control" id="filterCity" name="filterCity" value="{{ $filter['city'] }}">
                         </div>
 
-                        {{-- Статус --}}
+                        {{-- Status --}}
                         <div class="col-lg-3 col-sm-6 form-group">
-                            <label for="filterStatus">Статус</label>
+                            <label for="filterStatus">{{ trans('adminlte_lang::message.status') }}</label>
                             {!! Form::select('filterStatus',
                                 ['0' => '_все'] + $clientStatuses->toArray(),
                                 $filter['status'],
@@ -68,10 +68,10 @@
                     </div>
 
                     <div class="row">
-                    {{-- Товарные группы --}}
+                    {{-- Product groups --}}
                         <div class="col-md-10">
                             <div class="checkbox" style="margin-top: 0">
-                                <p class="checkbox-inline" style="padding-left: 0"><b>Товарные группы</b></p>
+                                <p class="checkbox-inline" style="padding-left: 0"><b>{{ trans('adminlte_lang::message.productgroups') }}</b></p>
                                 @foreach($productGroups as $pg)
                                     <label class="checkbox-inline">
                                         {!! Form::checkbox(
@@ -93,10 +93,10 @@
                 </div>
             </div>
 
-            {{-- Таблица данных --}}
+            {{-- Data table --}}
             <div class="box box-primary">
                 <div class="box-body">
-                    <a href="{{ url('/clients/create') }}" class="btn btn-success btn-sm" title="Добавить">
+                    <a href="{{ url('/clients/create') }}" class="btn btn-success btn-sm" title="{{ trans('adminlte_lang::message.add') }}">
                         <i class="fa fa-plus" aria-hidden="true"></i> {{ trans('adminlte_lang::message.add') }}
                     </a>
 
@@ -115,16 +115,16 @@
                     <table id="clients-table" class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Название</th>
-                                <th>Город</th>
+                                <th>{{ trans('adminlte_lang::message.id') }}</th>
+                                <th>{{ trans('adminlte_lang::message.name') }}</th>
+                                <th>{{ trans('adminlte_lang::message.city') }}</th>
                                 <th>{{ trans('adminlte_lang::message.clienttype') }}</th>
-                                <th>Статус</th>
-                                <th>Менеджер</th>
-                                <th>Признак</th>
-                                <th>Последнее событие</th>
-                                <th>Ближайшее событие</th>
-                                <th>Контактные данные</th>
+                                <th>{{ trans('adminlte_lang::message.status') }}</th>
+                                <th>{{ trans('adminlte_lang::message.manager') }}</th>
+                                <th>{{ trans('adminlte_lang::message.tags') }}</th>
+                                <th>{{ trans('adminlte_lang::message.actionlast') }}</th>
+                                <th>{{ trans('adminlte_lang::message.actionnext') }}</th>
+                                <th>{{ trans('adminlte_lang::message.contacts') }}</th>
                             </tr>
                         </thead>
                         <tbody>

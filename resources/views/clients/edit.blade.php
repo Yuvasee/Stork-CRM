@@ -52,8 +52,8 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                            <p><b>Дата создания:</b> {{ $client->created_at->format('d.m.Y') }}<br/>
-                            <b>Создал:</b> {{ $client->createdBy->name }}</p>
+                            <p><b>{{ trans('adminlte_lang::message.creationdate') }}:</b> {{ $client->created_at->format('d.m.Y') }}<br/>
+                            <b>{{ trans('adminlte_lang::message.creator') }}:</b> {{ $client->createdBy->name }}</p>
                                 </div>
                                 <div class="col-md-6" style="text-align: right;">
                                     {!! Form::open([
@@ -65,7 +65,7 @@
                                                 'type' => 'submit',
                                                 'class' => 'btn btn-danger btn-xs',
                                                 'title' => 'Delete Action',
-                                                'onclick'=>'return confirm("Подтвердить удаление?")'
+                                                'onclick'=>'return confirm("' . trans('adminlte_lang::message.confirmdelete') . '?")'
                                         )) !!}
                                     {!! Form::close() !!}                    
                                 </div>
@@ -87,27 +87,27 @@
                                 ]) !!}
 
                                 <div class="form-group {{ $errors->has('contact_name' . $contactPerson['id']) ? 'has-error' : ''}}">
-                                    {!! Form::label('contact_name' . $contactPerson['id'], 'Имя') !!}
+                                    {!! Form::label('contact_name' . $contactPerson['id'], trans('adminlte_lang::message.contactname')) !!}
                                     {!! Form::text('contact_name' . $contactPerson['id'], null, ['class' => 'form-control', 'required' => 'required']) !!}
                                     {!! $errors->first('contact_name' . $contactPerson['id'], '<p class="help-block">:message</p>') !!}
                                 </div>
                                 <div class="form-group {{ $errors->has('phone_work' . $contactPerson['id']) ? 'has-error' : ''}}">
-                                    {!! Form::label('phone_work' . $contactPerson['id'], 'Рабочий телефон') !!}
+                                    {!! Form::label('phone_work' . $contactPerson['id'], trans('adminlte_lang::message.phonework')) !!}
                                     {!! Form::text('phone_work' . $contactPerson['id'], null, ['class' => 'form-control']) !!}
                                     {!! $errors->first('phone_work' . $contactPerson['id'], '<p class="help-block">:message</p>') !!}
                                 </div>
                                 <div class="form-group {{ $errors->has('phone_mobile' . $contactPerson['id']) ? 'has-error' : ''}}">
-                                    {!! Form::label('phone_mobile' . $contactPerson['id'], 'Мобильный телефон') !!}
+                                    {!! Form::label('phone_mobile' . $contactPerson['id'], trans('adminlte_lang::message.phonemob')) !!}
                                     {!! Form::text('phone_mobile' . $contactPerson['id'], null, ['class' => 'form-control']) !!}
                                     {!! $errors->first('phone_mobile' . $contactPerson['id'], '<p class="help-block">:message</p>') !!}
                                 </div>
                                 <div class="form-group {{ $errors->has('contact_email' . $contactPerson['id']) ? 'has-error' : ''}}">
-                                    {!! Form::label('contact_email' . $contactPerson['id'], 'Email') !!}
+                                    {!! Form::label('contact_email' . $contactPerson['id'], trans('adminlte_lang::message.email')) !!}
                                     {!! Form::text('contact_email' . $contactPerson['id'], null, ['class' => 'form-control']) !!}
                                     {!! $errors->first('contact_email' . $contactPerson['id'], '<p class="help-block">:message</p>') !!}
                                 </div>
                                 <div class="form-group {{ $errors->has('notes' . $contactPerson['id']) ? 'has-error' : ''}}">
-                                    {!! Form::label('notes' . $contactPerson['id'], 'Заметки') !!}
+                                    {!! Form::label('notes' . $contactPerson['id'], trans('adminlte_lang::message.notes')) !!}
                                     {!! Form::textarea('notes' . $contactPerson['id'], null, ['class' => 'form-control', 'rows' => '2']) !!}
                                     {!! $errors->first('notes' . $contactPerson['id'], '<p class="help-block">:message</p>') !!}
                                 </div>
@@ -118,7 +118,7 @@
                                             'class' => 'btn btn-success btn-xs',
                                             'title' => trans('adminlte_lang::message.save'),
                                         ]) !!}
-                                    <a href="{{ url('/contact-persons/' . $contactPerson['id'] . '/delete?client_id=' . $client->id) }}" title="Удалить" onclick="return confirm('Подтвердить удаление?')"><button class="btn btn-danger btn-xs" type="button"><i class="fa fa-trash-o"></i> Удалить</button></a>
+                                    <a href="{{ url('/contact-persons/' . $contactPerson['id'] . '/delete?client_id=' . $client->id) }}" title="{{ trans('adminlte_lang::message.delete') }}" onclick="return confirm('{{ trans('adminlte_lang::message.confirmdelete') }}?')"><button class="btn btn-danger btn-xs" type="button"><i class="fa fa-trash-o"></i> {{ trans('adminlte_lang::message.delete') }}</button></a>
                                 </div>
 
                                 {!! Form::close() !!}
@@ -134,27 +134,27 @@
                             {!! Form::open(['url' => '/clients/' . $client->id . '/new-contact']) !!}
 
                                 <div class="form-group {{ $errors->has('contact_name_new') ? 'has-error' : ''}}">
-                                    {!! Form::label('contact_name_new', 'Имя') !!}
+                                    {!! Form::label('contact_name_new', trans('adminlte_lang::message.contactname')) !!}
                                     {!! Form::text('contact_name_new', null, ['class' => 'form-control', 'required' => 'required']) !!}
                                     {!! $errors->first('contact_name_new', '<p class="help-block">:message</p>') !!}
                                 </div>
                                 <div class="form-group {{ $errors->has('phone_work_new') ? 'has-error' : ''}}">
-                                    {!! Form::label('phone_work_new', 'Рабочий телефон') !!}
+                                    {!! Form::label('phone_work_new', trans('adminlte_lang::message.phonework')) !!}
                                     {!! Form::text('phone_work_new', null, ['class' => 'form-control']) !!}
                                     {!! $errors->first('phone_work_new', '<p class="help-block">:message</p>') !!}
                                 </div>
                                 <div class="form-group {{ $errors->has('phone_mobile_new') ? 'has-error' : ''}}">
-                                    {!! Form::label('phone_mobile_new', 'Мобильный телефон') !!}
+                                    {!! Form::label('phone_mobile_new', trans('adminlte_lang::message.phonemob')) !!}
                                     {!! Form::text('phone_mobile_new', null, ['class' => 'form-control']) !!}
                                     {!! $errors->first('phone_mobile_new', '<p class="help-block">:message</p>') !!}
                                 </div>
                                 <div class="form-group {{ $errors->has('contact_email_new') ? 'has-error' : ''}}">
-                                    {!! Form::label('contact_email_new', 'Email') !!}
+                                    {!! Form::label('contact_email_new', trans('adminlte_lang::message.email')) !!}
                                     {!! Form::text('contact_email_new', null, ['class' => 'form-control']) !!}
                                     {!! $errors->first('contact_email_new', '<p class="help-block">:message</p>') !!}
                                 </div>
                                 <div class="form-group {{ $errors->has('notes_new') ? 'has-error' : ''}}">
-                                    {!! Form::label('notes_new', 'Заметки') !!}
+                                    {!! Form::label('notes_new', trans('adminlte_lang::message.notes')) !!}
                                     {!! Form::textarea('notes_new', null, ['class' => 'form-control', 'rows' => '2']) !!}
                                     {!! $errors->first('notes_new', '<p class="help-block">:message</p>') !!}
                                 </div>

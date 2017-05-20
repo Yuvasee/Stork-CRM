@@ -16,14 +16,14 @@
     <div class="row">
         <div class="col-md-12">
 
-            {{-- ФИЛЬТР --}}
+            {{-- FILTER --}}
             <div class="box box-default">
                 <div class="box-body">
                     {!! Form::open(['method' => 'GET', 'url' => '/actions', 'role' => 'search'])  !!}
                     <div class="row">
                         <div class="col-lg-3 col-sm-6 form-group">
-                            {{-- Даты --}}
-                            <label for="filterDates">Даты</label>
+                            {{-- Dates --}}
+                            <label for="filterDates">{{ trans('adminlte_lang::message.dates') }}</label>
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -33,8 +33,8 @@
                         </div>
 
                         <div class="col-lg-3 col-sm-6 form-group">
-                            {{-- Менеджер --}}
-                            <label for="filterManager">Менеджер</label>
+                            {{-- Manager --}}
+                            <label for="filterManager">{{ trans('adminlte_lang::message.manager') }}</label>
                             {!! Form::select('filterManager',
                                 ['0' => '_все'] + $users->toArray(),
                                 $filter['manager'],
