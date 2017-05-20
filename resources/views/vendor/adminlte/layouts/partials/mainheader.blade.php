@@ -23,7 +23,7 @@
                     <!-- Menu Toggle Button -->
                     <a href="/actions?filterDates=01.01.2010+-+{{ \Carbon\Carbon::now()->addWeekdays(2)->format('d.m.Y') }}&filterManager={{ auth()->user()->id }}&filterStatuses[]=0" class="dropdown-toggle">
                         <i class="fa fa-flag-o"></i>
-                        <span class="label label-danger">{{-- auth()->user()->actions()->actual()->count() --}}</span>
+                        <span class="label label-danger">{{ auth()->user()->actions()->actual()->count() }}</span>
                     </a>
                 </li>
                 @if (Auth::guest())

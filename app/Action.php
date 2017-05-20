@@ -75,7 +75,7 @@ class Action extends Model
     public function scopeActual($query)
     {
         return $query->where('status', '=', 0)
-            ->andWhere('action_date', '<', Carbon::now()->addWeekdays(2)->toDateString());
+            ->Where('action_date', '<', Carbon::now()->addWeekdays(2)->toDateString());
     }
 
     // Deadline is today
@@ -89,7 +89,7 @@ class Action extends Model
     public function scopeOverdue($query)
     {
         return $query->where('status', '=', 0)
-            ->andWhere('action_date', '<', Carbon::now()->toDateString());
+            ->Where('action_date', '<', Carbon::now()->toDateString());
     }
 
     // Date from
