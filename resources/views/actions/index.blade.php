@@ -1,0 +1,242 @@
+@extends('adminlte::layouts.app')
+
+@section('htmlheader_title')
+    {{ trans('adminlte_lang::message.actions') }}
+@endsection
+
+@section('contentheader_title')
+    {{ trans('adminlte_lang::message.actions') }}
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('actions.index') !!}
+@endsection
+
+@section('main-content')
+    <div class="row">
+        <div class="col-md-12">
+
+            {{-- ФИЛЬТР --}}
+            <div class="box box-default">
+                <div class="box-body">
+                    {!! Form::open(['method' => 'GET', 'url' => '/actions', 'role' => 'search'])  !!}
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6 form-group">
+                            {{-- Даты --}}
+                            <label for="filterDates">Даты</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control" id="filterDates" name="filterDates">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-6 form-group">
+                            {{-- Менеджер --}}
+                            <label for="filterManager">Менеджер</label>
+                            {!! Form::select('filterManager',
+                                ['0' => '_все'] + $users->toArray(),
+                                $filter['manager'],
+                                [
+                                    'class' => 'form-control',
+                                    'id' => 'filterManager',
+                                    'style' => 'margin-right: 1.5em'
+                                ]) !!}
+                        </div>
+
+                        <div class="col-lg-3 col-sm-6 form-group">
+                            {{-- Клиент --}}
+                            <label for="filterClient">Клиент</label>
+                            <input type="text" class="form-control" id="filterClient" name="filterClient" value="{{ $filter['client'] }}">
+                        </div>
+
+                        <div class="col-lg-3 col-sm-6 form-group">
+                            {{-- Город --}}
+                            <label for="filterCity">Город</label>
+                            <input type="text" class="form-control" id="filterCity" name="filterCity" value="{{ $filter['city'] }}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                    {{-- Статус --}}
+                        <div class="col-md-10">
+                            <div class="checkbox" style="margin-top: 0">
+                                <label class="checkbox-inline">
+                                    {!! Form::checkbox('filterStatuses[]', 0, in_array(0, $filter['statuses'])); !!} <i class="fa fa-spinner" aria-hidden="true"></i> Запланированные
+                                </label>
+                                <label class="checkbox-inline">
+                                    {!! Form::checkbox('filterStatuses[]', 1,  in_array(1, $filter['statuses'])); !!} <i class="fa fa-check" aria-hidden="true"></i> Выполненные
+                                </label>
+                                <!--
+                                <label class="checkbox-inline" style="color: lightgrey">
+                                    {!! Form::checkbox('filterStatusess[]', 2,  in_array(1, $filter['statuses']), ['disabled']); !!} <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Просроченные
+                                </label>
+                                -->
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="text-align: right">
+                            <button type="submit" class="btn btn-default btn-flat">{{ trans('adminlte_lang::message.applyfilter') }}</button>
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+
+            {{-- Таблица данных --}}
+            <div class="box box-primary">
+
+                <div class="box-body">
+                    {!! Form::open([
+                        'method' => 'GET',
+                        'url' => '/actions',
+                        'class' => 'navbar-form navbar-right', 'role' => 'search', 'style' => 'margin: 0 0 5px 0; padding-right: 0'
+                    ])  !!}
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search" placeholder="{{ trans('adminlte_lang::message.search') }}..." value="{{ request('search') }}">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                    {!! Form::close() !!}
+                    
+                    <br/>
+
+                    <table id="actions-table" class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th></th>
+                                <th>Дата</th>
+                                <th>Менеджер</th>
+                                <th>Клиент</th>
+                                <th>Город</th>
+                                <th>Тип</th>
+                                <th>Описание</th>
+                                <th>Признак</th>
+                                <th>Контактные данные</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($actions as $item)
+                            <tr>
+                                <td>
+                                    @if(auth()->user()->can('update', $item))
+                                        <a href="/actions/{{ $item->id }}/edit">{{ $item->id }}</a>
+                                    @else
+                                        {{ $item->id }}
+                                    @endif
+                                </td>
+                                <td style="font-size: 150%" align="center">
+                                    @include('actions.flag', ['flag' => $item->flag()])
+                                </td>
+                                <td>{{ $item->action_date->format('d.m.Y') }}</td>
+                                <td>{{ $item->manager->name }}</td>
+                                <td><a href="/clients/{{ $item->client->id }}/edit">{{ $item->client->name }}</a></td>
+                                <td>{{ $item->client->city }}</td>
+                                <td>{{ $item->type->name }}</td>
+                                <td>
+                                    @if(auth()->user()->can('update', $item))
+                                        <a href="/actions/{{ $item->id }}/edit">{{ $item->description }}</a>
+                                    @else
+                                        {{ $item->description }}
+                                    @endif
+                                </td>
+                                <td>{{ $item->tags }}</td>
+                                <td style="font-size: 90%; color: #555">
+                                    @include('clients.contacts', ['client' => $item->client])
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    <div class="pagination-wrapper"> {!! $actions->appends(['search' => Request::get('search')])->render() !!} </div>
+                    <p>Всего событий: {{ number_format($actions->total(), 0, "", "&thinsp;") }}.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('scripts')
+    @parent
+    <script>
+      $(function () {
+        $('#actions-table').DataTable({
+          "paging": false,
+          "lengthChange": false,
+          "searching": false,
+          "info": false,
+          "rowReorder": false,
+          "autoWidth": false,
+          "order": [[ 2, "desc" ]],
+        });
+        $('#filterDates').daterangepicker(
+            {
+                "locale": {
+                    "format": 'DD.MM.YYYY',
+                    "separator": " - ",
+                    "applyLabel": "Применить",
+                    "cancelLabel": "Отмена",
+                    "fromLabel": "С",
+                    "toLabel": "По",
+                    "monthNames": [
+                        "Январь",
+                        "Февраль",
+                        "Март",
+                        "Апрель",
+                        "Май",
+                        "Июнь",
+                        "Июль",
+                        "Август",
+                        "Сентябрь",
+                        "Октябрь",
+                        "Ноябрь",
+                        "Декабрь"
+                    ],
+                    "customRangeLabel": "Свой диапазон",
+                    "daysOfWeek": [
+                        "вс",
+                        "пн",
+                        "вт",
+                        "ср",
+                        "чт",
+                        "пт",
+                        "сб"
+                    ],
+                    "firstDay": 1,
+                },
+                "showCustomRangeLabel": false,
+                "showDropdowns": true,
+                "linkedCalendars": false,
+                "ranges": {
+                    "Сегодня": [
+                        "{!! \Carbon\Carbon::now()->format('d.m.Y') !!}",
+                        "{!! \Carbon\Carbon::now()->format('d.m.Y') !!}"
+                    ],
+                    "Завтра": [
+                        "{!! \Carbon\Carbon::tomorrow()->format('d.m.Y') !!}",
+                        "{!! \Carbon\Carbon::tomorrow()->format('d.m.Y') !!}"
+                    ],
+                    "Эта неделя": [
+                        "{!! \Carbon\Carbon::parse('this week monday')->format('d.m.Y') !!}",
+                        "{!! \Carbon\Carbon::parse('this week sunday')->format('d.m.Y') !!}"
+                    ],
+                    "Этот месяц": [
+                        "{!! \Carbon\Carbon::parse('first day of this month')->format('d.m.Y') !!}",
+                        "{!! \Carbon\Carbon::parse('last day of this month')->format('d.m.Y') !!}"
+                    ],
+                    "Этот год": [
+                        "{!! \Carbon\Carbon::parse('first day of January ' . date('Y'))->format('d.m.Y') !!}",
+                        "{!! \Carbon\Carbon::parse('last day of December ' . date('Y'))->format('d.m.Y') !!}"
+                    ],
+                },
+                startDate: '{!! $filter['datesFrom']->format('d.m.Y') !!}',
+                endDate: '{!! $filter['datesTo']->format('d.m.Y') !!}'
+            }
+        );
+      });
+    </script>
+@endsection

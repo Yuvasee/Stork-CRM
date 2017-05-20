@@ -25,6 +25,17 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 	    return redirect()->route('home');
 	});
 
+	// Actions
+	Route::resource('actions', 'ActionsController', ['except' => ['show']]);
+
+	// Clients
+	Route::resource('clients', 'ClientsController');
+	
+	// Contact persons (no special crud UI for it)
+	Route::post('clients/{id}/new-contact', 'ContactPersonsController@store');
+	Route::get('contact-persons/{id}/delete', 'ContactPersonsController@destroy');
+	Route::patch('contact-persons/{id}', 'ContactPersonsController@update');
+
 	// Administrators area
 	//
 	//Route::group(['middleware' => 'admin'], function () {

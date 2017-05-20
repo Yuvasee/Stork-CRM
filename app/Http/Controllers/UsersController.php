@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUser;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\UserRole;
