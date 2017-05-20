@@ -300,11 +300,155 @@ class Importer
 
     }
 
+    public static function clientProductGroup()
+    {
+        // Get table of old-new client IDs into $clientsMatch
+        $clientsMatch = self::getClientsMatch();
+
+        // Compare of old-new client IDs into $pgsMatch
+        $oldPgs = DB::connection('import')->select('select * from products_types');
+        $pgsMatch = [];
+        foreach ($oldPgs as $oldPg) {
+            $pgsMatch[$oldPg->product_type_id] = ProductGroup::where('name', $oldPg->name)->first()->id;
+        }
+
+        // Get old m2m table
+        $oldData = DB::connection('import')->select('select * from clients_has_products_types');
+
+        self::truncTable('client_product_group');
+
+        $i = 0;
+        foreach ($oldData as $oldRow) {
+        	// if exist new client corresponding with old one
+            if(array_key_exists($oldRow->clients_client_id, $clientsMatch) &&
+               	// and if exist corresponding product group
+                array_key_exists($oldRow->products_types_product_type_id, $pgsMatch)){
+            	// Add new client<->PG m2m connection
+                DB::table('client_product_group')->insert([
+                        'client_id' => $clientsMatch[$oldRow->clients_client_id],
+                        'product_group_id' => $pgsMatch[$oldRow->products_types_product_type_id]
+                    ]);                
+                $i++;
+            }
+        }
+     
+        return $i;
+
+    }
+
+    public static function contactPersons()
+    {
+        // Get table of old-new client IDs into $clientsMatch
+        $clientsMatch = self::getClientsMatch();
+        
+        $oldData = DB::connection('import')->select('select * from people');
+
+        DB::table('contact_persons')->truncate();
+
+        $i = 0;
+        foreach ($oldData as $value) {
+            // if exist corresponding client in new DB
+            if(array_key_exists($value->client_id, $clientsMatch)){
+                $row = [
+                    'name' => $value->FIO,
+                    'client_id' => $clientsMatch[$value->client_id],
+                    'phone_work' => $value->telefon,
+                    'phone_mobile' => $value->telefon_mobile,
+                    'email' => $value->email,
+                    'notes' => $value->comment,
+                ];
+                ContactPerson::create($row);
+
+                $i++;
+            }
+
+        }
+
+        return $i;
+
+    }
+
+    public static function actions()
+    {
+        // Get table of old-new client IDs into $clientsMatch
+        $clientsMatch = self::getClientsMatch();
+        
+        // Get table of old-new action type IDs into $typesMatch
+        $oldTypes = DB::connection('import')
+            ->select('select * from cmb_action_type');
+        $typesMatch = [];
+        foreach ($oldTypes as $oldType) {
+            $typesMatch[$oldType->ID] = ActionType::where('name', $oldType->Value)->first()->id;
+        }
+        $typesMatch[-1] = ActionType::where('name', 'Тип не установлен')->first()->id;
+
+        // Get table of old-new user IDs into $usersMatch
+        $oldUsers = DB::connection('import')
+            ->select('select * from users');
+        $usersMatch = [];
+        foreach ($oldUsers as $oldUser) {
+            $usersMatch[$oldUser->user_id] = User::where('name', $oldUser->name . ' ' . $oldUser->surname)->first()->id;
+        }
+
+        $offset = 0;
+        // If import is already started set current offset
+        if(session('actions_import_offset'))
+        	$offset = session('actions_import_offset');
+        // If not trunc actions table to begin from blank
+        else
+        	self::truncTable('actions');
+
+        // Get actions from old DB with proper offset from session if needed
+        $oldData = DB::connection('import')->select('select * from action order by ID limit 8000 offset ' . $offset);
+
+        // Move data
+        foreach ($oldData as $value) {
+            if(array_key_exists($value->client_id, $clientsMatch)
+                && array_key_exists($value->UID, $usersMatch))
+            {
+                $row = [
+                    'client_id' => $clientsMatch[$value->client_id],
+                    'status' => $value->isDel,
+                    'action_date' => preg_replace('/-00$/', '-01', $value->dtAction),
+                    'action_type_id' => isset($typesMatch[$value->cmb_action_type]) ? $typesMatch[$value->cmb_action_type] : $typesMatch[-1],
+                    'manager_user_id' => $usersMatch[$value->UID],
+                    'description' => $value->Description,
+                    'tags' => $value->Sign,
+                ];
+
+                Action::create($row);
+
+            }
+
+            $offset++;
+            session(['actions_import_offset' => $offset]);
+        }
+
+        // Clean up session if finished whole actions table
+        $count = DB::connection('import')->select('select count(*) as c from action');
+        if($offset >= $count[0]->c)
+        	session(['actions_import_offset' => null]);
+
+        return $offset;
+
+    }
+
     private static function truncTable($tbl)
     {
     	DB::statement('set foreign_key_checks = 0');
         DB::table($tbl)->truncate();
         DB::statement('set foreign_key_checks = 1');    	
+    }
+
+    private static function getClientsMatch()
+    {
+        $matchData = DB::select('select * from client_old_new');
+        $clientsMatch = [];
+        foreach ($matchData as $matchRow) {
+            $clientsMatch[$matchRow->old_client_id] = $matchRow->new_client_id;
+        }
+
+        return $clientsMatch;
     }
 
 }

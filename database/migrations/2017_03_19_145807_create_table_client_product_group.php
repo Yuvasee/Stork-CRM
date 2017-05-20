@@ -16,7 +16,7 @@ class CreateTableClientProductGroup extends Migration
         Schema::create('client_product_group', function (Blueprint $table) {
             $table->integer('client_id')->unsigned();
             $table->integer('product_group_id')->unsigned();
-            $table->primary(['client_id', 'product_group_id']);
+            $table->index(['client_id', 'product_group_id']);
             $table->foreign('client_id')->references('id')->on('clients')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('product_group_id')->references('id')->on('product_groups')->onUpdate('cascade')->onDelete('cascade');
         });

@@ -27,6 +27,11 @@ class Client extends Model
      */
     protected $fillable = ['name', 'client_type_id', 'client_status_id', 'client_source_id', 'manager_user_id', 'phone_number', 'email', 'address', 'post_address', 'city', 'region', 'region_code', 'tags', 'additional_info', 'website', 'created_by_user_id'];
 
+    /**
+    * 
+    * Connections
+    *
+    */
     public function type()
     {
         return $this->belongsTo('App\ClientType', 'client_type_id');
@@ -67,6 +72,11 @@ class Client extends Model
         return $this->hasMany('App\Action');
     }
 
+    /**
+    * 
+    * Actions
+    *
+    */
     public function actionsPast()
     {
         return $this->actions()->past()->orderBy('action_date', 'desc');
@@ -99,6 +109,11 @@ class Client extends Model
             return null;
     }
 
+    /**
+    * 
+    * Scopes
+    *
+    */
     public function scopeStatus1($query)
     {
         return $query
