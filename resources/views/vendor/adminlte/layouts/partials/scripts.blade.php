@@ -13,3 +13,17 @@
         'csrfToken' => csrf_token(),
     ]) !!};
 </script>
+<script>
+	function setSidebarCookie(sc = 0) {
+		var d = new Date;
+		d.setDate(d.getDate() + 30);
+    	document.cookie = "sidebarCollapsed=" + sc.toString() + "; expires=" + d.toUTCString() + "; path=/";
+	}
+
+    $('body').on('expanded.pushMenu', function(){
+		setSidebarCookie(0)
+    });
+    $('body').on('collapsed.pushMenu', function(){
+		setSidebarCookie(1)
+    });
+</script>
