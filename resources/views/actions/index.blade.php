@@ -171,6 +171,7 @@
           "info": false,
           "rowReorder": false,
           "autoWidth": false,
+          "columnDefs": [{"type": "de_date", "targets": 2}],
           "order": [[ 2, "desc" ]],
         });
         $('#filterDates').daterangepicker(

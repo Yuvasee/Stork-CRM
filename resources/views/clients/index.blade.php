@@ -136,16 +136,18 @@
                                 <td>{{ $item->type->name }}</td>
                                 <td>{{ $item->status->name }}</td>
                                 <td>{{ $item->manager->name }}</td>
-                                <td>{{ $item->tags }}</td>
-                                <td>{{ $item->actionLast() ? $item->actionLast()->action_date->format('d.m.Y') : "&mdash;" }}</td>
                                 <td>
+                                    {{ $item->tags }}
                                     @php
                                         $actionNext = $item->actionNext();
                                     @endphp
-                                    {{ $actionNext ? $actionNext->action_date->format('d.m.Y') : "&mdash;" }}
                                     @if($actionNext)
                                         @include('actions.flag', ['flag' => $item->actionNext()->flag()])
                                     @endif
+                                </td>
+                                <td>{{ $item->actionLast() ? $item->actionLast()->action_date->format('d.m.Y') : "&mdash;" }}</td>
+                                <td>
+                                    {{ $actionNext ? $actionNext->action_date->format('d.m.Y') : "&mdash;" }}
                                 </td>
                                 <td style="font-size: 90%; color: #555">
                                     @include('clients.contacts', ['client' => $item])
@@ -189,6 +191,7 @@
           "searching": false,
           "info": false,
           "rowReorder": false,
+          "columnDefs": [{"type": "de_date", "targets": [7, 8]}],
           "order": [[ 0, "desc" ]],
         });
       });

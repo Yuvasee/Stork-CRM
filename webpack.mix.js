@@ -19,6 +19,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
       'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
       //'node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.ru.min.js',
       'node_modules/datatables/media/js/jquery.dataTables.js',
+      'resources/assets/js/date-de.js',
       'node_modules/datatables.net-bs/js/dataTables.bootstrap.js',
       'node_modules/jquery-slimscroll/jquery.slimscroll.js',
       'node_modules/fastclick/lib/fastclick.js'

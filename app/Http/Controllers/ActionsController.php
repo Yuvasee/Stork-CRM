@@ -69,7 +69,7 @@ class ActionsController extends Controller
 
         // Try to load values from cookie
         if (Cookie::has('filterActions'))
-            $filter = unserialize(Cookie::get('filter'));
+            $filter = unserialize(Cookie::get('filterActions'));
 
         // Dates
         // try request, overwrite cookie if exists
@@ -150,7 +150,7 @@ class ActionsController extends Controller
             $filter['statuses'] = [0, 1];
         }
 
-        // Сохраняем фильтр в cookie //
+        // Save filter in cookie
         $cookieJar->queue(cookie('filterActions', serialize($filter), 45000));
 
         return $filter;
