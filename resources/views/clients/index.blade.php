@@ -86,6 +86,7 @@
                         </div>
                         <div class="col-md-2" style="text-align: right">
                             {!! Form::hidden('isFiltered', 1) !!}
+                            {!! Form::hidden('showAll', request('showAll', null)) !!}
                             <button type="submit" class="btn btn-default btn-flat">{{ trans('adminlte_lang::message.applyfilter') }}</button>
                         </div>
                     </div>
@@ -173,8 +174,10 @@
                         @endforeach
                         </tbody>
                     </table>
-                    <div class="pagination-wrapper"> {!! $clients->appends(['search' => Request::get('search')])->render() !!} </div>
-                    <p>Всего клиентов: {{ number_format($clients->total(), 0, "", "&thinsp;") }}.</p>
+                    @if(! request('showAll', null))
+                        <div class="pagination-wrapper"> {!! $clients->appends(['search' => Request::get('search')])->render() !!} </div>
+                        <p>Всего клиентов: {{ number_format($clients->total(), 0, "", "&thinsp;") }}. <a href="?showAll=1">Показать всех</a></p>
+                    @endif
                 </div>
             </div>
         </div>

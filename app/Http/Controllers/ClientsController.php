@@ -47,9 +47,16 @@ class ClientsController extends Controller
         // Add sorting
         $clients = $clients->orderBy('id', 'desc');
 
-        // Paginate rows
-        $perPage = 50;
-        $clients = $clients->paginate($perPage);
+        if($request->has('showAll'))
+        {
+            $clients = $clients->limit(600)->get();
+        }
+        else
+        {
+            // Paginate rows
+            $perPage = 50;
+            $clients = $clients->paginate($perPage);
+        }
 
         return view('clients.index', compact('clients', 'filter'));
     }
