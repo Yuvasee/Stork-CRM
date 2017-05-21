@@ -36,10 +36,16 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 	Route::get('contact-persons/{id}/delete', 'ContactPersonsController@destroy');
 	Route::patch('contact-persons/{id}', 'ContactPersonsController@update');
 
-	// Administrators area
-	//
+	/**
+	* Administration area
+	*/
 	Route::group(['middleware' => 'admin'], function () {
 	
+		// Statistics
+		Route::get('/stats/overdue', 'StatsController@overdue');
+		Route::get('/stats/output', 'StatsController@output');
+		Route::get('/stats/clients', 'StatsController@clients');
+
 		// Directories
 		Route::resource('action-types', 'ActionTypesController', ['except' => ['show']]);
 		Route::resource('client-types', 'ClientTypesController', ['except' => ['show']]);
