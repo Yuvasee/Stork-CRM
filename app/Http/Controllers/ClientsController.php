@@ -21,14 +21,14 @@ class ClientsController extends Controller
      */
     public function index(CookieJar $cookieJar, Request $request)
     {
-        // Make clients table filter
+        // Make clients table filter (save to cookies)
         $filter = $this->filterMake($cookieJar, $request);
 
         // Apply filter
         $clients = new Client;
         $clients = $this->filterApply($clients, $filter);
 
-        // Apply search
+        // Apply search (no save)
         $keyword = $request->get('search');
         if (!empty($keyword)) {
             $clients = $clients
@@ -44,21 +44,69 @@ class ClientsController extends Controller
                 });
         }
 
-        // Add sorting
-        $clients = $clients->orderBy('id', 'desc');
+        /**
+        * Sorting (save to session)
+        */
+        // Request is priority, then check session, then use defaults
+        $sorting = [
+            'by' => request('sort_by', session('clients_sort_by') ? session('clients_sort_by') : 'id'),
+            'order' => request('sort_order', session('clients_sort_order') ? session('clients_sort_order') : 'desc')
+        ];
 
-        if($request->has('showAll'))
-        {
-            $clients = $clients->limit(600)->get();
-        }
+        // Apply sorting
+        if($sorting['by'] == 'name')
+            $clients = $clients->orderBy('name', $sorting['order']);
+        elseif($sorting['by'] == 'city')
+            $clients = $clients->orderBy('city', $sorting['order']);
+        elseif($sorting['by'] == 'clienttype')
+            $clients = $clients->join('client_types', 'clients.client_type_id', '=', 'client_types.id')->orderBy('client_types.name', $sorting['order']);
+        elseif($sorting['by'] == 'status')
+            $clients = $clients->join('client_statuses', 'clients.client_status_id', '=', 'client_statuses.id')->orderBy('client_statuses.name', $sorting['order']);
+        elseif($sorting['by'] == 'manager')
+            $clients = $clients->join('users', 'clients.manager_user_id', '=', 'users.id')->orderBy('users.name', $sorting['order']);
+        elseif($sorting['by'] == 'tags')
+            $clients = $clients->orderBy('tags', $sorting['order']);
+        elseif($sorting['by'] == 'actionlast')
+            $clients = $clients->join('actions', function ($q)
+                {
+                    $q->on('clients.id', '=', 'actions.client_id')
+                    ->where('actions.status', '=', 1);
+                })
+                ->groupBy('clients.id')
+                ->orderByRaw('max(actions.action_date) ' . $sorting['order']);
+        elseif($sorting['by'] == 'actionnext')
+            $clients = $clients->join('actions', function ($q)
+                {
+                    $q->on('clients.id', '=', 'actions.client_id')
+                    ->where('actions.status', '=', 0);
+                })
+                ->groupBy('clients.id')
+                ->orderByRaw('max(actions.action_date) ' . $sorting['order']);
         else
+            $clients = $clients->orderBy('id', $sorting['order']);
+
+        // Save sorting to session
+        session([
+            'clients_sort_by' => $sorting['by'],
+            'clients_sort_order' => $sorting['order']
+        ]);
+
+        $clients->select('clients.*');
+        //dd($clients->toSql());
+
+        // Paginate rows
+        if(!$request->has('showAll'))
         {
-            // Paginate rows
             $perPage = 50;
             $clients = $clients->paginate($perPage);
         }
+        // or draw long sheet
+        else
+            $clients = $clients->limit(600)->get();
 
-        return view('clients.index', compact('clients', 'filter'));
+        //dd($clients);
+
+        return view('clients.index', compact('clients', 'filter', 'sorting'));
     }
 
     /**

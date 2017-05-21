@@ -146,7 +146,7 @@
                                 </td>
                                 <td>{{ $item->tags }}</td>
                                 <td style="font-size: 90%; color: #555">
-                                    @include('clients.contacts', ['client' => $item->client])
+                                    @include('clients._contacts', ['client' => $item->client])
                                 </td>
                             </tr>
                         @endforeach

@@ -116,15 +116,15 @@
                     <table id="clients-table" class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>{{ trans('adminlte_lang::message.id') }}</th>
-                                <th>{{ trans('adminlte_lang::message.name') }}</th>
-                                <th>{{ trans('adminlte_lang::message.city') }}</th>
-                                <th>{{ trans('adminlte_lang::message.clienttype') }}</th>
-                                <th>{{ trans('adminlte_lang::message.status') }}</th>
-                                <th>{{ trans('adminlte_lang::message.manager') }}</th>
-                                <th>{{ trans('adminlte_lang::message.tags') }}</th>
-                                <th>{{ trans('adminlte_lang::message.actionlast') }}</th>
-                                <th>{{ trans('adminlte_lang::message.actionnext') }}</th>
+                                <th>@include('clients._th', ['field' => 'id', 'def_order' => 'desc'])</th>
+                                <th>@include('clients._th', ['field' => 'name', 'def_order' => 'asc'])</th>
+                                <th>@include('clients._th', ['field' => 'city', 'def_order' => 'asc'])</th>
+                                <th>@include('clients._th', ['field' => 'clienttype', 'def_order' => 'asc'])</th>
+                                <th>@include('clients._th', ['field' => 'status', 'def_order' => 'asc'])</th>
+                                <th>@include('clients._th', ['field' => 'manager', 'def_order' => 'asc'])</th>
+                                <th>@include('clients._th', ['field' => 'tags', 'def_order' => 'asc'])</th>
+                                <th>@include('clients._th', ['field' => 'actionlast', 'def_order' => 'desc'])</th>
+                                <th>@include('clients._th', ['field' => 'actionnext', 'def_order' => 'desc'])</th>
                                 <th>{{ trans('adminlte_lang::message.contacts') }}</th>
                             </tr>
                         </thead>
@@ -151,7 +151,7 @@
                                     {{ $actionNext ? $actionNext->action_date->format('d.m.Y') : "&mdash;" }}
                                 </td>
                                 <td style="font-size: 90%; color: #555">
-                                    @include('clients.contacts', ['client' => $item])
+                                    @include('clients._contacts', ['client' => $item])
                                 </td>
                                 {{--
                                     <td>
@@ -186,6 +186,7 @@
 
 @section('scripts')
     @parent
+    {{--
     <script>
       $(function () {
         $('#clients-table').DataTable({
@@ -199,4 +200,5 @@
         });
       });
     </script>
+    --}}
 @endsection

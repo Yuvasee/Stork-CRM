@@ -151,12 +151,12 @@
 
         <!-- Прошедшие события -->
         <div role="tabpanel" class="tab-pane" id="past-tab">
-             @include ('clients.actions', ['actions' => $actionsPast, 'tab' => 'past-tab', 'status' => '1'])
+             @include ('clients._actions', ['actions' => $actionsPast, 'tab' => 'past-tab', 'status' => '1'])
         </div>
         
         <!-- Планируемые события -->
         <div role="tabpanel" class="tab-pane" id="future-tab">
-             @include ('clients.actions', ['actions' => $actionsFuture, 'tab' => 'future-tab', 'status' => '0'])
+             @include ('clients._actions', ['actions' => $actionsFuture, 'tab' => 'future-tab', 'status' => '0'])
         </div>
 
     </div>
