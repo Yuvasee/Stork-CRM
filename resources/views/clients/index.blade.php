@@ -183,22 +183,3 @@
         </div>
     </div>
 @endsection
-
-@section('scripts')
-    @parent
-    {{--
-    <script>
-      $(function () {
-        $('#clients-table').DataTable({
-          "paging": false,
-          "lengthChange": false,
-          "searching": false,
-          "info": false,
-          "rowReorder": false,
-          "columnDefs": [{"type": "de_date", "targets": [7, 8]}],
-          "order": [[ 0, "desc" ]],
-        });
-      });
-    </script>
-    --}}
-@endsection
