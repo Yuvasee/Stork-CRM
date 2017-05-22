@@ -10,32 +10,32 @@ use App\ClientStatus;
 
 class ActionsComposer
 {
-    /**
-     * Bind data to the view.
-     *
-     * @param  View  $view
-     * @return void
-     */
-    public function compose(View $view)
+
+    private $actionTypes, $users, $actionStatuses, $clientStatuses;
+
+    public function __construct()
     {
-        $actionTypes = ActionType::orderBy('sorting_num', 'asc')->pluck('name', 'id');
-        $actionTypes->prepend("");
+        $this->actionTypes = ActionType::orderBy('sorting_num', 'asc')->pluck('name', 'id');
+        $this->actionTypes->prepend("");
 
-        $users = User::active()->orderBy('name', 'asc')->pluck('name', 'id');
+        $this->users = User::active()->orderBy('name', 'asc')->pluck('name', 'id');
 
-        $actionStatuses = [
+        $this->actionStatuses = [
             0 => 'Планируемое',
             1 => 'Прошедшее'
         ];
 
-        $clientStatuses = ClientStatus::orderBy('sorting_num', 'asc')->pluck('name', 'id');
-        $clientStatuses->prepend("");
+        $this->clientStatuses = ClientStatus::orderBy('sorting_num', 'asc')->pluck('name', 'id');
+        $this->clientStatuses->prepend("");
+    }
 
-        $view->with(compact(
-            'users',
-            'actionTypes',
-            'actionStatuses',
-            'clientStatuses'
-        ));
+    public function compose(View $view)
+    {
+        $view->with([
+            'users' => $this->users,
+            'actionTypes' => $this->actionTypes,
+            'actionStatuses' => $this->actionStatuses,
+            'clientStatuses' => $this->clientStatuses
+        ]);
     }
 }

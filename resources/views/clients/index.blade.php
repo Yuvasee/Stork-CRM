@@ -134,19 +134,20 @@
                                 <td>{{ $item->id }}</td>
                                 <td><a href="{{ url('/clients/' . $item->id . '/edit') }}" title="Редактировать клиента">{{ $item->name }}</a></td>
                                 <td>{{ $item->city }}</td>
-                                <td>{{ $item->type->name }}</td>
-                                <td>{{ $item->status->name }}</td>
-                                <td>{{ $item->manager->name }}</td>
+                                <td>{{ $clientTypes[$item->client_type_id] }}</td>
+                                <td>{{ $clientStatuses[$item->client_status_id] }}</td>
+                                <td>{{ $usersAll[$item->manager_user_id] }}</td>
                                 <td>
                                     {{ $item->tags }}
                                     @php
                                         $actionNext = $item->actionNext();
+                                        $actionLast = $item->actionLast();
                                     @endphp
                                     @if($actionNext)
-                                        @include('actions.flag', ['flag' => $item->actionNext()->flag()])
+                                        @include('actions.flag', ['flag' => $actionNext->flag()])
                                     @endif
                                 </td>
-                                <td>{{ $item->actionLast() ? $item->actionLast()->action_date->format('d.m.Y') : "&mdash;" }}</td>
+                                <td>{{ $actionLast ? $actionLast->action_date->format('d.m.Y') : "&mdash;" }}</td>
                                 <td>
                                     {{ $actionNext ? $actionNext->action_date->format('d.m.Y') : "&mdash;" }}
                                 </td>

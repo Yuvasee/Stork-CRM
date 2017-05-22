@@ -11,40 +11,42 @@ use App\User;
 
 class ClientsComposer
 {
-    /**
-     * Bind data to the view.
-     *
-     * @param  View  $view
-     * @return void
-     */
-    public function compose(View $view)
+
+    private $clientTypes, $clientStatuses, $clientSources, $users, $usersAll, $productGroups;
+
+    public function __construct()
     {
-        $clientTypes = ClientType::orderBy('sorting_num', 'asc')->pluck('name', 'id');
-        $clientTypes->prepend("");
+        $this->clientTypes = ClientType::orderBy('sorting_num', 'asc')->pluck('name', 'id');
+        $this->clientTypes->prepend("");
 
-        $clientStatuses = ClientStatus::orderBy('sorting_num', 'asc')->pluck('name', 'id');
-        $clientStatuses->prepend("");
+        $this->clientStatuses = ClientStatus::orderBy('sorting_num', 'asc')->pluck('name', 'id');
+        $this->clientStatuses->prepend("");
 
-        $clientSources = ClientSource::orderBy('sorting_num', 'asc')->pluck('name', 'id');
-        $clientSources->prepend("");
+        $this->clientSources = ClientSource::orderBy('sorting_num', 'asc')->pluck('name', 'id');
+        $this->clientSources->prepend("");
 
-        $users = User::active()->orderBy('name', 'asc')->pluck('name', 'id');
+        $this->users = User::active()->orderBy('name', 'asc')->pluck('name', 'id');
+        $this->usersAll = User::orderBy('name', 'asc')->pluck('name', 'id');
 
-        $productGroups = [];
+        $this->productGroups = [];
         $pGroups = ProductGroup::orderBy('sorting_num', 'asc')->get();
         foreach ($pGroups as $key => $value) {
-            $productGroups[$key] = [
+            $this->productGroups[$key] = [
                 'id' => $value->id,
                 'name' => $value->name
             ];
         }
+    }
 
-        $view->with(compact(
-            'clientTypes',
-            'clientStatuses',
-            'clientSources',
-            'users',
-            'productGroups'
-        ));
+    public function compose(View $view)
+    {
+        $view->with([
+            'clientTypes' => $this->clientTypes,
+            'clientStatuses' => $this->clientStatuses,
+            'clientSources' => $this->clientSources,
+            'users' => $this->users,
+            'usersAll' => $this->usersAll,
+            'productGroups' => $this->productGroups
+        ]);
     }
 }

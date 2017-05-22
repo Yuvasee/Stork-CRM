@@ -121,9 +121,13 @@
                         </thead>
                         <tbody>
                         @foreach($actions as $item)
+                            @php
+                                $canUpdate = auth()->user()->can('update', $item);
+                                $client = $item->client;
+                            @endphp
                             <tr>
                                 <td>
-                                    @if(auth()->user()->can('update', $item))
+                                    @if($canUpdate)
                                         <a href="/actions/{{ $item->id }}/edit">{{ $item->id }}</a>
                                     @else
                                         {{ $item->id }}
@@ -133,12 +137,12 @@
                                     @include('actions.flag', ['flag' => $item->flag()])
                                 </td>
                                 <td>{{ $item->action_date->format('d.m.Y') }}</td>
-                                <td>{{ $item->manager->name }}</td>
-                                <td><a href="/clients/{{ $item->client->id }}/edit">{{ $item->client->name }}</a></td>
-                                <td>{{ $item->client->city }}</td>
-                                <td>{{ $item->type->name }}</td>
+                                <td>{{ $users[$item->manager_user_id] }}</td>
+                                <td><a href="/clients/{{ $client->id }}/edit">{{ $client->name }}</a></td>
+                                <td>{{ $client->city }}</td>
+                                <td>{{ $actionTypes[$item->action_type_id] }}</td>
                                 <td>
-                                    @if(auth()->user()->can('update', $item))
+                                    @if($canUpdate)
                                         <a href="/actions/{{ $item->id }}/edit">{{ $item->description }}</a>
                                     @else
                                         {{ $item->description }}
@@ -146,7 +150,7 @@
                                 </td>
                                 <td>{{ $item->tags }}</td>
                                 <td style="font-size: 90%; color: #555">
-                                    @include('clients._contacts', ['client' => $item->client])
+                                    @include('clients._contacts', ['client' => $client])
                                 </td>
                             </tr>
                         @endforeach

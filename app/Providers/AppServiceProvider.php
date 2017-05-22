@@ -18,8 +18,13 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        View::composer('clients.*', 'App\Http\ViewComposers\ClientsComposer');
-        View::composer('actions.*', 'App\Http\ViewComposers\ActionsComposer');
+        View::composer('clients.index', 'App\Http\ViewComposers\ClientsComposer');
+        View::composer('clients.edit', 'App\Http\ViewComposers\ClientsComposer');
+        View::composer('clients.show', 'App\Http\ViewComposers\ClientsComposer');
+        View::composer('clients.create', 'App\Http\ViewComposers\ClientsComposer');
+        View::composer('actions.index', 'App\Http\ViewComposers\ActionsComposer');
+        View::composer('actions.edit', 'App\Http\ViewComposers\ActionsComposer');
+        View::composer('actions.create', 'App\Http\ViewComposers\ActionsComposer');
     }
 
     /**
