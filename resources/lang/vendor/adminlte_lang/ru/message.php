@@ -112,6 +112,7 @@ return [
     'creation'                => 'Создание',
     'actiontypes'             => 'Типы событий',
     'clients'                 => 'Клиенты',
+    'client'                  => 'Клиент',
     'userroles'               => 'Роли пользователей',
     'users'                   => 'Пользователи',
     'actions'                 => 'События',

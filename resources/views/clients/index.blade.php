@@ -116,15 +116,15 @@
                     <table id="clients-table" class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>@include('clients._th', ['field' => 'id', 'def_order' => 'desc'])</th>
-                                <th>@include('clients._th', ['field' => 'name', 'def_order' => 'asc'])</th>
-                                <th>@include('clients._th', ['field' => 'city', 'def_order' => 'asc'])</th>
-                                <th>@include('clients._th', ['field' => 'clienttype', 'def_order' => 'asc'])</th>
-                                <th>@include('clients._th', ['field' => 'status', 'def_order' => 'asc'])</th>
-                                <th>@include('clients._th', ['field' => 'manager', 'def_order' => 'asc'])</th>
-                                <th>@include('clients._th', ['field' => 'tags', 'def_order' => 'asc'])</th>
-                                <th>@include('clients._th', ['field' => 'actionlast', 'def_order' => 'desc'])</th>
-                                <th>@include('clients._th', ['field' => 'actionnext', 'def_order' => 'desc'])</th>
+                                <th>@include('partials._th', ['field' => 'id', 'def_order' => 'desc'])</th>
+                                <th>@include('partials._th', ['field' => 'name', 'def_order' => 'asc'])</th>
+                                <th>@include('partials._th', ['field' => 'city', 'def_order' => 'asc'])</th>
+                                <th>@include('partials._th', ['field' => 'clienttype', 'def_order' => 'asc'])</th>
+                                <th>@include('partials._th', ['field' => 'status', 'def_order' => 'asc'])</th>
+                                <th>@include('partials._th', ['field' => 'manager', 'def_order' => 'asc'])</th>
+                                <th>@include('partials._th', ['field' => 'tags', 'def_order' => 'asc'])</th>
+                                <th>@include('partials._th', ['field' => 'actionlast', 'def_order' => 'desc'])</th>
+                                <th>@include('partials._th', ['field' => 'actionnext', 'def_order' => 'desc'])</th>
                                 <th>{{ trans('adminlte_lang::message.contacts') }}</th>
                             </tr>
                         </thead>

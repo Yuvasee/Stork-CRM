@@ -98,7 +98,7 @@ class ClientsController extends Controller
             'clients_sort_order' => $sorting['order']
         ]);
 
-        // Select clients but not actions if joined
+        // Select clients but not something else if joined
         $clients->select('clients.*');
 
         // Paginate rows

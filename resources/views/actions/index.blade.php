@@ -107,16 +107,16 @@
                     <table id="actions-table" class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>@include('partials._th', ['field' => 'id', 'def_order' => 'desc'])</th>
                                 <th></th>
-                                <th>Дата</th>
-                                <th>Менеджер</th>
-                                <th>Клиент</th>
-                                <th>Город</th>
-                                <th>Тип</th>
-                                <th>Описание</th>
-                                <th>Признак</th>
-                                <th>Контактные данные</th>
+                                <th>@include('partials._th', ['field' => 'date', 'def_order' => 'desc'])</th>
+                                <th>@include('partials._th', ['field' => 'manager', 'def_order' => 'asc'])</th>
+                                <th>@include('partials._th', ['field' => 'client', 'def_order' => 'asc'])</th>
+                                <th>@include('partials._th', ['field' => 'city', 'def_order' => 'asc'])</th>
+                                <th>@include('partials._th', ['field' => 'type', 'def_order' => 'asc'])</th>
+                                <th>@include('partials._th', ['field' => 'description', 'def_order' => 'asc'])</th>
+                                <th>@include('partials._th', ['field' => 'tags', 'def_order' => 'asc'])</th>
+                                <th>{{ trans('adminlte_lang::message.contacts') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -164,16 +164,6 @@
     @parent
     <script>
       $(function () {
-        $('#actions-table').DataTable({
-          "paging": false,
-          "lengthChange": false,
-          "searching": false,
-          "info": false,
-          "rowReorder": false,
-          "autoWidth": false,
-          "columnDefs": [{"type": "de_date", "targets": 2}],
-          "order": [[ 2, "desc" ]],
-        });
         $('#filterDates').daterangepicker(
             {
                 "locale": {

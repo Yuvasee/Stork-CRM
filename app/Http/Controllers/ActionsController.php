@@ -41,21 +41,60 @@ class ActionsController extends Controller
                             $query2->where('name', 'like', "%$keyword%");
                         })
                         ->orWhere('description', 'LIKE', "%$keyword%")
-                        ->orWhere('tags', 'LIKE', "%$keyword%");
+                        ->orWhere('actions.tags', 'LIKE', "%$keyword%");
                 });
         }
 
 
-        // Add sorting
-        $actions = $actions
-            ->orderBy('status')
-            ->orderBy('action_date', 'desc');
+        /**
+        * Sorting (save to session)
+        */
+        // Request is priority, then check session, then use defaults
+        $sorting = [
+            'by' => request('sort_by', session('actions_sort_by') ? session('actions_sort_by') : 'date'),
+            'order' => request('sort_order', session('actions_sort_order') ? session('actions_sort_order') : 'desc')
+        ];
+
+        // Apply sorting
+        if ($sorting['by'] == 'id') 
+            $actions = $actions->orderBy('id', $sorting['order']);
+        elseif ($sorting['by'] == 'manager')
+            $actions = $actions
+                ->join('users', 'actions.manager_user_id', '=', 'users.id')
+                ->orderBy('users.name', $sorting['order']);
+        elseif ($sorting['by'] == 'client')
+            $actions = $actions
+                ->join('clients', 'actions.client_id', '=', 'clients.id')
+                ->orderBy('clients.name', $sorting['order']);
+        elseif ($sorting['by'] == 'city')
+            $actions = $actions
+                ->join('clients', 'actions.client_id', '=', 'clients.id')
+                ->orderBy('clients.city', $sorting['order']);
+        elseif ($sorting['by'] == 'type')
+            $actions = $actions
+                ->join('action_types', 'actions.action_type_id', '=', 'action_types.id')
+                ->orderBy('action_types.name', $sorting['order']);
+        elseif ($sorting['by'] == 'description')
+            $actions = $actions->orderBy('description', $sorting['order']);
+        elseif ($sorting['by'] == 'tags')
+            $actions = $actions->orderBy('tags', $sorting['order']);
+        else
+            $actions = $actions->orderBy('action_date', $sorting['order']);
+
+        // Save sorting to session
+        session([
+            'actions_sort_by' => $sorting['by'],
+            'actions_sort_order' => $sorting['order']
+        ]);
+
+        // Select actions but not something else if joined
+        $actions->select('actions.*');
 
         // Paginate rows
         $perPage = 50;
         $actions = $actions->paginate($perPage);
 
-        return view('actions.index', compact('actions', 'filter'));
+        return view('actions.index', compact('actions', 'filter', 'sorting'));
     }
 
     /**
@@ -167,7 +206,7 @@ class ActionsController extends Controller
         // Mananges
         if ($filter['manager'] != 0)
             $actions = $actions
-                ->where('manager_user_id', $filter['manager']);
+                ->where('actions.manager_user_id', $filter['manager']);
 
         // Clients
         if ($filter['client'] != "")
