@@ -203,7 +203,7 @@
                     ],
                     "firstDay": 1,
                 },
-                "showCustomRangeLabel": false,
+                "showCustomRangeLabel": true,
                 "showDropdowns": true,
                 "linkedCalendars": false,
                 "ranges": {

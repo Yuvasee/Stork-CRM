@@ -5,7 +5,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link href="{{ asset('/css/all.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ mix('/css/all.css') }}" rel="stylesheet" type="text/css" />
 
     <!--[if lt IE 9]>
     <script src="/js/html5shiv.min.js"></script>
