@@ -21,7 +21,8 @@ class ClientsController extends Controller
      */
     public function index(CookieJar $cookieJar, Request $request)
     {
-        // Make clients table filter (save to cookies)
+        // Make clients table filter
+        // from request/cookies/defaults (save to cookies)
         $filter = $this->filterMake($cookieJar, $request);
 
         // Apply filter
@@ -40,7 +41,7 @@ class ClientsController extends Controller
                         ->orWhere('post_address', 'LIKE', "%$keyword%")
                         ->orWhere('additional_info', 'LIKE', "%$keyword%")
                         ->orWhere('website', 'LIKE', "%$keyword%")
-                        ->orWhere('tags', 'LIKE', "%$keyword%");
+                        ->orWhere('clients.tags', 'LIKE', "%$keyword%");
                 });
         }
 
@@ -54,19 +55,25 @@ class ClientsController extends Controller
         ];
 
         // Apply sorting
-        if($sorting['by'] == 'name')
+        if ($sorting['by'] == 'name')
             $clients = $clients->orderBy('name', $sorting['order']);
-        elseif($sorting['by'] == 'city')
+        elseif ($sorting['by'] == 'city')
             $clients = $clients->orderBy('city', $sorting['order']);
-        elseif($sorting['by'] == 'clienttype')
-            $clients = $clients->join('client_types', 'clients.client_type_id', '=', 'client_types.id')->orderBy('client_types.name', $sorting['order']);
-        elseif($sorting['by'] == 'status')
-            $clients = $clients->join('client_statuses', 'clients.client_status_id', '=', 'client_statuses.id')->orderBy('client_statuses.name', $sorting['order']);
-        elseif($sorting['by'] == 'manager')
-            $clients = $clients->join('users', 'clients.manager_user_id', '=', 'users.id')->orderBy('users.name', $sorting['order']);
-        elseif($sorting['by'] == 'tags')
+        elseif ($sorting['by'] == 'clienttype')
+            $clients = $clients
+                ->join('client_types', 'clients.client_type_id', '=', 'client_types.id')
+                ->orderBy('client_types.name', $sorting['order']);
+        elseif ($sorting['by'] == 'status')
+            $clients = $clients
+                ->join('client_statuses', 'clients.client_status_id', '=', 'client_statuses.id')
+                ->orderBy('client_statuses.name', $sorting['order']);
+        elseif ($sorting['by'] == 'manager')
+            $clients = $clients
+                ->join('users', 'clients.manager_user_id', '=', 'users.id')
+                ->orderBy('users.name', $sorting['order']);
+        elseif ($sorting['by'] == 'tags')
             $clients = $clients->orderBy('tags', $sorting['order']);
-        elseif($sorting['by'] == 'actionlast')
+        elseif ($sorting['by'] == 'actionlast')
             $clients = $clients->join('actions', function ($q)
                 {
                     $q->on('clients.id', '=', 'actions.client_id')
@@ -74,7 +81,7 @@ class ClientsController extends Controller
                 })
                 ->groupBy('clients.id')
                 ->orderByRaw('max(actions.action_date) ' . $sorting['order']);
-        elseif($sorting['by'] == 'actionnext')
+        elseif ($sorting['by'] == 'actionnext')
             $clients = $clients->join('actions', function ($q)
                 {
                     $q->on('clients.id', '=', 'actions.client_id')
@@ -91,11 +98,11 @@ class ClientsController extends Controller
             'clients_sort_order' => $sorting['order']
         ]);
 
+        // Select clients but not actions if joined
         $clients->select('clients.*');
-        //dd($clients->toSql());
 
         // Paginate rows
-        if(!$request->has('showAll'))
+        if (!$request->has('showAll'))
         {
             $perPage = 50;
             $clients = $clients->paginate($perPage);
@@ -103,8 +110,6 @@ class ClientsController extends Controller
         // or draw long sheet
         else
             $clients = $clients->limit(600)->get();
-
-        //dd($clients);
 
         return view('clients.index', compact('clients', 'filter', 'sorting'));
     }
@@ -125,77 +130,53 @@ class ClientsController extends Controller
         // Manager
         // try request, overwrite cookie if exists
         if ($request->has('filterManager'))
-        {
             $filter['manager'] = $request->filterManager;
-        }
         // If still no value from request or cookie set default
         if (!array_key_exists('manager', $filter))
-        {
             // Current user
             $filter['manager'] = auth()->user()->id;
-        }
 
         // Client type
         // try request, overwrite cookie if exists
         if ($request->has('filterType'))
-        {
             $filter['type'] = $request->filterType;
-        }
         // If still no value from request or cookie set default
         if (!array_key_exists('type', $filter))
-        {
             // 0 - select all types
             $filter['type'] = 0;
-        }
 
         // City
         // try request, overwrite cookie if exists
         if ($request->has('filterCity'))
-        {
             $filter['city'] = $request->filterCity;
-        }
         // no data from request but filter is applyed - flush cookie values
         elseif ($request->has('isFiltered'))
-        {
             $filter['city'] = "";
-        }
         // If still no value from request or cookie set default
         if (!array_key_exists('city', $filter))
-        {
             // Empty string - no filter applyed
             $filter['city'] = "";          
-        }
 
         // Status
         // try request, overwrite cookie if exists
         if ($request->has('filterStatus'))
-        {
             $filter['status'] = $request->filterStatus;
-        }
         // If still no value from request or cookie set default
         if (!array_key_exists('status', $filter))
-        {
             // 0 - select all statuses
             $filter['status'] = 0;
-        }
 
         // Product groups
         // try request, overwrite cookie if exists
         if($request->has('filterProductGroups'))
-        {
             $filter['productGroups'] = $request->filterProductGroups;
-        }
         // no data from request but filter is applyed - flush cookie values
         elseif ($request->has('isFiltered'))
-        {
             $filter['productGroups'] = [];
-        }
         // If still no value from request or cookie set default
         if (!array_key_exists('productGroups', $filter))
-        {
             // Empty
             $filter['productGroups'] = [];
-        }        
 
         // Save made filter to cookie
         $cookieJar->queue(cookie('filterClients', serialize($filter), 45000));
@@ -208,27 +189,22 @@ class ClientsController extends Controller
     {
         // Manager filter
         if ($filter['manager'] != 0)
-            $clients = $clients
-                ->where('manager_user_id', $filter['manager']);
+            $clients = $clients->where('clients.manager_user_id', $filter['manager']);
 
         // Client type filter
         if ($filter['type'] != 0)
-            $clients = $clients
-                ->where('client_type_id', $filter['type']);
+            $clients = $clients->where('client_type_id', $filter['type']);
 
         // City filter by mask
         if ($filter['city'] != "")
-            $clients = $clients
-                ->where('city', 'like', '%' . $filter['city'] . '%');
+            $clients = $clients->where('city', 'like', '%' . $filter['city'] . '%');
 
         // Status filter
         if ($filter['status'] != 0)
-            $clients = $clients
-                ->where('client_status_id', '=', $filter['status']);
+            $clients = $clients->where('client_status_id', '=', $filter['status']);
 
         // Product groups filter
-        if (is_array($filter['productGroups']) && !empty($filter['productGroups']))
-        {
+        if (is_array($filter['productGroups']) && !empty($filter['productGroups'])) {
             $filterProductGroups = $filter['productGroups'];
 
             // Create group (where || where)
@@ -242,7 +218,6 @@ class ClientsController extends Controller
                             $query2->where('id', $v);
                         });
                 });
-
         }
 
         return $clients;
