@@ -77,6 +77,8 @@
             autoclose: true,
             format: 'dd.mm.yyyy',
             weekStart: 1,
+            orientation: 'bottom',
+            language: "{{ config('app.locale', 'en') }}",
         });
         
         if(! $("[datepicker]").val())
