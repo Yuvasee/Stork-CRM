@@ -111,7 +111,7 @@
                                     {!! Form::textarea('notes' . $contactPerson['id'], null, ['class' => 'form-control', 'rows' => '2']) !!}
                                     {!! $errors->first('notes' . $contactPerson['id'], '<p class="help-block">:message</p>') !!}
                                 </div>
-                                {!! Form::hidden('client_id' . $contactPerson['id'], $client->id) !!}
+                                {!! Form::hidden('client_id', $client->id) !!}
                                 <div class="form-group">
                                     {!! Form::button('<i class="fa fa-save" aria-hidden="true"></i> ' . trans('adminlte_lang::message.save'), [
                                             'type' => 'submit',

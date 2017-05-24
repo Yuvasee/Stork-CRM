@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use App\Client;
 use Illuminate\Http\Request;
-use Session;
-use Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Cookie\CookieJar;
+use App\Client;
+use Session;
+use Auth;
 
 class ClientsController extends Controller
 {
