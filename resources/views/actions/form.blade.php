@@ -79,6 +79,7 @@
             weekStart: 1,
             orientation: 'bottom',
             language: "{{ config('app.locale', 'en') }}",
+            todayHighlight: true,
         });
         
         if(! $("[datepicker]").val())
