@@ -35,6 +35,7 @@
                     <p><a href="/import/?action=client-product-group">Импортировать связи клиентов и продуктовых групп</a></p>
                     <p><a href="/import/?action=contact-persons">Импортировать контактные лица</a></p>
                     <p><a href="/import/?action=actions">Импортировать события</a></p>
+                    <p><a href="/import/?action=cities">Импортировать города</a></p>
                 @else
                     @if ($message)
                         <div class="alert alert-success alert-dismissible">
@@ -57,6 +58,7 @@
                     <p><a href="/import/?action=client-product-group">Import relationships between clients and product groups</a></p>
                     <p><a href="/import/?action=contact-persons">Import contacts</a></p>
                     <p><a href="/import/?action=actions">Import actions</a></p>
+                    <p><a href="/import/?action=cities">Import cities</a></p>
                 @endif
                 </div>
             </div>

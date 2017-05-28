@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Cookie\CookieJar;
 use App\Client;
+use App\City;
 use Session;
 use Auth;
 
@@ -230,7 +231,10 @@ class ClientsController extends Controller
     public function create()
     {
         $attachedPGs = [];
-        return view('clients.create', compact('attachedPGs'));
+        $cities = City::orderBy('name')->select('id', 'name')->get();
+        $cities = $cities->pluck('name', 'name');
+        $cities->prepend("");
+        return view('clients.create', compact('attachedPGs', 'cities'));
     }
 
     /**

@@ -14,6 +14,7 @@ use App\User;
 use App\Client;
 use App\ContactPerson;
 use App\Action;
+use App\City;
 
 class Importer
 {
@@ -430,7 +431,24 @@ class Importer
         	session(['actions_import_offset' => null]);
 
         return $offset;
+    }
 
+    public static function cities()
+    {
+        DB::table('cities')->truncate();
+
+        $oldCities = DB::connection('import')
+            ->select('select * from citys');
+
+        foreach ($oldCities as $c) {
+            City::create([
+                'name' => $c->name,
+                'region' => $c->region,
+                'code' => $c->code
+            ]);
+        }
+
+        return count($oldCities);
     }
 
     private static function truncTable($tbl)

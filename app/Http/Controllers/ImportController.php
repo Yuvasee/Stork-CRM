@@ -47,6 +47,9 @@ class ImportController extends Controller
                 case 'actions':
                     $message = ['num' => Importer::actions(), 'type' => 'Actions'];
                     break;
+                case 'cities':
+                    $message = ['num' => Importer::cities(), 'type' => 'Cities'];
+                    break;
             }
         }
 

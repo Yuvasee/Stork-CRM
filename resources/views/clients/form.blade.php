@@ -66,7 +66,11 @@
 </div>
 <div class="form-group {{ $errors->has('city') ? 'has-error' : ''}}">
     {!! Form::label('city', trans('adminlte_lang::message.city')) !!}
-    {!! Form::text('city', null, ['class' => 'form-control']) !!}
+    @if(isset($cities))
+        {!! Form::select('city', $cities, null, ['class' => 'form-control']) !!}
+    @else
+        {!! Form::text('city', null, ['class' => 'form-control']) !!}
+    @endif
     {!! $errors->first('city', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('region') ? 'has-error' : ''}}">
