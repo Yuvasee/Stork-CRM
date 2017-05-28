@@ -13,3 +13,7 @@
 
 //Font awesome
 @import "node_modules/font-awesome/scss/font-awesome.scss";
+
+.table-striped > tbody > tr:nth-child(2n+1) > td {
+   background-color: #eee;
+}
