@@ -24,7 +24,12 @@
 </div><div class="form-group {{ $errors->has('action_type_id') ? 'has-error' : ''}}">
     {!! Form::label('action_type_id', 'Тип события', ['class' => 'col-lg-3 control-label']) !!}
     <div class="col-lg-9">
-        {!! Form::select('action_type_id', $actionTypes, null, ['class' => 'form-control']) !!}
+        {!! Form::select(
+            'action_type_id',
+            $actionTypes,
+            request()->status ? config('crm.default_completed_action_type_id') : config('crm.default_planned_action_type_id'),
+            ['class' => 'form-control']
+        ) !!}
         {!! $errors->first('action_type_id', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('manager_user_id') ? 'has-error' : ''}}">
